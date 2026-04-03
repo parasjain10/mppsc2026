@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MPPSC 2026 - Smart Question Bank</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0f172a;--surface:#1e293b;--card:#334155;--border:#475569;
+    --primary:#6366f1;--primary-light:#818cf8;--accent:#22d3ee;
+    --success:#10b981;--danger:#ef4444;--warning:#f59e0b;
+    --text:#f1f5f9;--text-muted:#94a3b8;--text-dim:#64748b;
+  }
+  body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+  .container{max-width:1100px;margin:0 auto;padding:20px}
+
+  header{text-align:center;padding:40px 20px 30px;background:linear-gradient(135deg,#1e1b4b,#312e81,#1e1b4b);border-bottom:2px solid var(--primary)}
+  header h1{font-size:2.2rem;font-weight:800;background:linear-gradient(90deg,var(--accent),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  header p{color:var(--text-muted);margin-top:6px;font-size:1rem}
+  .exam-badge{display:inline-block;margin-top:12px;padding:6px 18px;background:rgba(99,102,241,.2);border:1px solid var(--primary);border-radius:20px;font-size:.85rem;color:var(--primary-light)}
+
+  .stats-bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:24px auto;max-width:1100px;padding:0 20px}
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+  .stat-card .num{font-size:1.8rem;font-weight:700;color:var(--accent)}
+  .stat-card .label{font-size:.8rem;color:var(--text-muted);margin-top:2px}
+
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:28px auto 20px;max-width:1100px;padding:0 20px}
+  .tab{padding:10px 20px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text-muted);cursor:pointer;font-size:.88rem;transition:.2s}
+  .tab:hover{border-color:var(--primary);color:var(--text)}
+  .tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+
+  .mode-toggle{display:flex;gap:10px;justify-content:center;margin-bottom:20px}
+  .mode-btn{padding:10px 24px;border:2px solid var(--border);border-radius:10px;background:transparent;color:var(--text-muted);cursor:pointer;font-size:.9rem;font-weight:600;transition:.2s}
+  .mode-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(34,211,238,.08)}
+
+  .prob-filter{display:flex;gap:8px;justify-content:center;margin-bottom:24px;flex-wrap:wrap}
+  .prob-btn{padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;font-size:.82rem;transition:.2s}
+  .prob-btn.active{color:#fff}
+  .prob-btn.high.active{background:#dc2626;border-color:#dc2626}
+  .prob-btn.medium.active{background:#d97706;border-color:#d97706}
+  .prob-btn.all.active{background:var(--primary);border-color:var(--primary)}
+
+  .questions-list{display:flex;flex-direction:column;gap:16px}
+  .q-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;transition:.2s;position:relative;overflow:hidden}
+  .q-card:hover{border-color:var(--primary)}
+  .q-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;gap:10px}
+  .q-num{font-size:.78rem;color:var(--text-dim);font-weight:600}
+  .q-prob{font-size:.72rem;padding:3px 10px;border-radius:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+  .q-prob.high{background:rgba(220,38,38,.15);color:#f87171}
+  .q-prob.medium{background:rgba(217,119,6,.15);color:#fbbf24}
+  .q-topic{font-size:.72rem;color:var(--accent);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+  .q-text{font-size:1.02rem;font-weight:600;margin-bottom:16px;line-height:1.5}
+
+  .options{display:flex;flex-direction:column;gap:8px}
+  .option{padding:12px 16px;border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:10px;font-size:.92rem}
+  .option:hover{border-color:var(--primary-light);background:rgba(99,102,241,.06)}
+  .option .letter{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;background:var(--card);border:1px solid var(--border);flex-shrink:0}
+  .option.selected{border-color:var(--primary);background:rgba(99,102,241,.1)}
+  .option.correct{border-color:var(--success);background:rgba(16,185,129,.1)}
+  .option.correct .letter{background:var(--success);color:#fff;border-color:var(--success)}
+  .option.wrong{border-color:var(--danger);background:rgba(239,68,68,.08)}
+  .option.wrong .letter{background:var(--danger);color:#fff;border-color:var(--danger)}
+
+  .answer-section{margin-top:16px;padding:16px;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);border-radius:10px;display:none}
+  .answer-section.show{display:block}
+  .answer-section h4{color:var(--success);margin-bottom:6px;font-size:.9rem}
+  .answer-section p{font-size:.88rem;color:var(--text-muted);line-height:1.6}
+
+  .study-answer{margin-top:14px;padding:14px;background:rgba(34,211,238,.06);border:1px solid rgba(34,211,238,.15);border-radius:10px}
+  .study-answer h4{color:var(--accent);margin-bottom:4px;font-size:.88rem}
+  .study-answer p{font-size:.88rem;color:var(--text-muted);line-height:1.6}
+
+  .quiz-controls{display:flex;gap:12px;justify-content:center;margin-top:30px;flex-wrap:wrap}
+  .btn{padding:12px 28px;border:none;border-radius:10px;font-size:.92rem;font-weight:600;cursor:pointer;transition:.2s}
+  .btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-light)}
+  .btn-accent{background:var(--accent);color:var(--bg)}.btn-accent:hover{opacity:.85}
+  .btn-outline{background:transparent;border:2px solid var(--border);color:var(--text)}.btn-outline:hover{border-color:var(--primary)}
+
+  .score-panel{text-align:center;padding:30px;background:var(--surface);border-radius:14px;border:1px solid var(--border);margin-top:20px;display:none}
+  .score-panel h2{font-size:1.6rem;margin-bottom:8px}
+  .score-panel .big{font-size:3rem;font-weight:800;color:var(--accent)}
+
+  .hidden{display:none!important}
+  .progress-bar{height:4px;background:var(--card);border-radius:2px;margin:20px 0;overflow:hidden}
+  .progress-bar .fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .4s;border-radius:2px}
+
+  .search-box{display:flex;justify-content:center;margin-bottom:20px}
+  .search-box input{width:100%;max-width:500px;padding:12px 20px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:.92rem;outline:none;transition:.2s}
+  .search-box input:focus{border-color:var(--primary)}
+  .search-box input::placeholder{color:var(--text-dim)}
+
+  @media(max-width:600px){
+    header h1{font-size:1.5rem}
+    .tabs{gap:5px}
+    .tab{padding:8px 12px;font-size:.78rem}
+    .q-card{padding:16px}
+    .container{padding:12px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>MPPSC 2026 Smart Question Bank</h1>
+  <p>AI-Curated High-Probability Questions for Prelims (Paper I - General Studies)</p>
+  <div class="exam-badge">Exam Date: 26 April 2026 &bull; 100 Questions &bull; 200 Marks</div>
+  <p style="color:var(--text-dim);margin-top:8px;font-size:.78rem">Data sourced from mp.gov.in, invest.mp.gov.in, MP Economic Survey 2025-26, MP Budget 2026-27 &bull; Updated April 2026</p>
+</header>
+
+<div class="stats-bar">
+  <div class="stat-card"><div class="num" id="totalQ">0</div><div class="label">Total Questions</div></div>
+  <div class="stat-card"><div class="num" id="highP">0</div><div class="label">High Probability</div></div>
+  <div class="stat-card"><div class="num" id="categories">0</div><div class="label">Categories</div></div>
+  <div class="stat-card"><div class="num" id="scoreDisplay">--</div><div class="label">Your Score</div></div>
+</div>
+
+<div class="container">
+  <div class="mode-toggle">
+    <button class="mode-btn active" onclick="setMode('study')">Study Mode</button>
+    <button class="mode-btn" onclick="setMode('quiz')">Quiz Mode</button>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search questions by keyword..." oninput="renderQuestions()">
+  </div>
+
+  <div class="tabs" id="tabsContainer"></div>
+
+  <div class="prob-filter">
+    <button class="prob-btn all active" onclick="setProb('all')">All</button>
+    <button class="prob-btn high" onclick="setProb('high')">High Probability</button>
+    <button class="prob-btn medium" onclick="setProb('medium')">Medium Probability</button>
+  </div>
+
+  <div class="progress-bar" id="progressBar"><div class="fill" id="progressFill"></div></div>
+
+  <div class="questions-list" id="questionsList"></div>
+
+  <div class="quiz-controls" id="quizControls">
+    <button class="btn btn-outline" onclick="resetQuiz()">Reset Quiz</button>
+    <button class="btn btn-primary" onclick="showAllAnswers()">Show All Answers</button>
+    <button class="btn btn-accent" onclick="calculateScore()">Calculate Score</button>
+  </div>
+
+  <div class="score-panel" id="scorePanel">
+    <h2>Your Score</h2>
+    <div class="big" id="finalScore">0/0</div>
+    <p style="color:var(--text-muted);margin-top:8px" id="scoreMsg"></p>
+  </div>
+</div>
+
+<script>
+const questions = [
+  // =============================================
+  // SECTION 1: MP HISTORY & CULTURE (Q1-12)
+  // =============================================
+  {id:1,cat:"MP History & Culture",topic:"Tribal Movements",prob:"high",
+   q:"Which tribal leader led the Bhil Revolt of 1857 in western Madhya Pradesh?",
+   options:["Tantia Bhil","Bhima Nayak","Shankar Shah","Khajya Nayak"],
+   ans:2,
+   explanation:"Shankar Shah and his son Raghunath Shah were prominent leaders who revolted against the British in 1857. They were executed by being tied to cannons in Jabalpur on 18 September 1858."},
+
+  {id:2,cat:"MP History & Culture",topic:"Historical Sites",prob:"high",
+   q:"The rock shelters of Bhimbetka, a UNESCO World Heritage Site in MP, are primarily known for:",
+   options:["Buddhist monasteries","Paleolithic and Mesolithic cave paintings","Mughal-era forts","Gupta period temples"],
+   ans:1,
+   explanation:"Bhimbetka rock shelters near Raisen contain prehistoric cave paintings dating back approximately 30,000 years, depicting scenes of hunting, dancing, and animal figures from the Stone Age."},
+
+  {id:3,cat:"MP History & Culture",topic:"Dynasties",prob:"high",
+   q:"Which dynasty built the famous Khajuraho temples in Madhya Pradesh?",
+   options:["Paramara Dynasty","Chandela Dynasty","Pratihara Dynasty","Kalachuri Dynasty"],
+   ans:1,
+   explanation:"The Chandela Dynasty built the Khajuraho temples between 950-1050 CE. Originally 85 temples were built; only about 25 survive today. They are a UNESCO World Heritage Site."},
+
+  {id:4,cat:"MP History & Culture",topic:"Freedom Movement",prob:"medium",
+   q:"The 'Jungle Satyagraha' of 1930 in Madhya Pradesh was against:",
+   options:["Salt Tax","Forest laws restricting tribal rights","Land revenue system","Railway expansion"],
+   ans:1,
+   explanation:"The Jungle Satyagraha was a civil disobedience movement against oppressive forest laws that restricted tribals' traditional rights over forest produce in central India."},
+
+  {id:5,cat:"MP History & Culture",topic:"UNESCO Sites",prob:"high",
+   q:"Which of the following Buddhist site in MP contains the famous Ashoka Stupa?",
+   options:["Bharhut","Sanchi","Udaygiri","Dhamnar"],
+   ans:1,
+   explanation:"The Great Stupa at Sanchi (near Bhopal) was originally commissioned by Emperor Ashoka in the 3rd century BCE. It is one of the oldest stone structures in India and a UNESCO World Heritage Site."},
+
+  {id:6,cat:"MP History & Culture",topic:"Inscriptions",prob:"high",
+   q:"The Heliodorus Pillar at Vidisha (Besnagar) was erected by a Greek ambassador to the court of which dynasty?",
+   options:["Maurya","Shunga","Satavahana","Gupta"],
+   ans:1,
+   explanation:"The Heliodorus Pillar (c. 113 BCE) was erected by Heliodorus, an Indo-Greek ambassador to the Shunga court. It is one of the earliest known records of a foreigner converting to Vaishnavism in India."},
+
+  {id:7,cat:"MP History & Culture",topic:"Performing Arts",prob:"medium",
+   q:"'Rai' dance is a famous folk dance of which region of Madhya Pradesh?",
+   options:["Malwa","Bundelkhand","Baghelkhand","Nimar"],
+   ans:1,
+   explanation:"Rai dance is a traditional folk dance of the Bundelkhand region of MP. It is performed by women during celebrations and festivals. Other famous MP folk dances include Matki, Badhai, Karma, and Saila."},
+
+  {id:8,cat:"MP History & Culture",topic:"Forts & Monuments",prob:"high",
+   q:"The Gwalior Fort is described as 'the pearl among fortresses in India' by:",
+   options:["Babur","Akbar","Sher Shah Suri","Aurangzeb"],
+   ans:0,
+   explanation:"Babur described Gwalior Fort as 'the pearl among the fortresses of Hind' in his memoir Baburnama. The fort features the famous Sas-Bahu temples, Man Mandir Palace, and Teli ka Mandir."},
+
+  {id:9,cat:"MP History & Culture",topic:"Literature",prob:"medium",
+   q:"The famous Hindi poet Bhavani Prasad Mishra hails from which district of MP?",
+   options:["Hoshangabad (Narmadapuram)","Tikamgarh","Rewa","Jabalpur"],
+   ans:0,
+   explanation:"Bhavani Prasad Mishra (1913-1985), one of the most important Hindi poets, was from Hoshangabad (now Narmadapuram), MP. He was known for his nature poetry and received the Sahitya Akademi Award."},
+
+  {id:10,cat:"MP History & Culture",topic:"UNESCO 2025 Nominations",prob:"high",
+   q:"In 2025, how many historical sites from Madhya Pradesh were added to UNESCO's tentative World Heritage list?",
+   options:["2","3","4","5"],
+   ans:2,
+   explanation:"In 2025, four MP sites were added to UNESCO's tentative list: Ashokan Edict Sites, Chausath Yogini Temples, Gupta Period Temples (Sanchi, Udaigiri, Nachna, Tigawa, Bhumara, etc.), and Palace-Fortresses of the Bundelas. The Bhojeshwar Mahadev Temple was added in 2024."},
+
+  {id:11,cat:"MP History & Culture",topic:"UNESCO 2025 Nominations",prob:"high",
+   q:"The Chausath Yogini Temples, added to UNESCO's tentative list in 2025, are located in which MP districts?",
+   options:["Bhopal and Indore only","Khajuraho, Morena, Jabalpur, Mandsaur, and Shahdol","Gwalior and Ujjain only","Sagar and Rewa only"],
+   ans:1,
+   explanation:"The Chausath Yogini Temples (9th-12th century) feature unique circular, open-air designs with intricate stone carvings. The serial nomination submitted on 11 February 2025 includes sites at Khajuraho, Morena, Jabalpur, Mandsaur, and Shahdol in MP."},
+
+  {id:12,cat:"MP History & Culture",topic:"UNESCO 2024",prob:"high",
+   q:"Which MP temple was submitted to UNESCO's tentative World Heritage list in February 2024?",
+   options:["Mahakaleshwar Temple, Ujjain","Bhojeshwar Mahadev Temple, Bhojpur","Omkareshwar Temple","Kandariya Mahadeva Temple, Khajuraho"],
+   ans:1,
+   explanation:"The Bhojeshwar Mahadev Temple in Bhojpur (Raisen district) was submitted to UNESCO's tentative list on 8 February 2024. It is an incomplete 11th-century Shiva temple with one of the largest Shivalingas in India."},
+
+  // =============================================
+  // SECTION 2: MP GEOGRAPHY (Q13-30)
+  // =============================================
+  {id:13,cat:"MP Geography",topic:"Rivers",prob:"high",
+   q:"Which river originates from Amarkantak in Madhya Pradesh?",
+   options:["Betwa","Chambal","Narmada","Ken"],
+   ans:2,
+   explanation:"The Narmada and the Sone rivers both originate from Amarkantak plateau in Anuppur district. Narmada flows westward into the Arabian Sea, making it one of only three major rivers in India to do so."},
+
+  {id:14,cat:"MP Geography",topic:"Mineral Resources",prob:"high",
+   q:"Madhya Pradesh ranks first in India in the production of which mineral?",
+   options:["Coal","Iron ore","Diamond","Copper"],
+   ans:2,
+   explanation:"Madhya Pradesh is the largest producer of diamonds in India. The Panna diamond mine is one of Asia's only diamond-producing mines. Panna Diamonds received a GI tag in 2024. MP also leads in manganese and diaspore."},
+
+  {id:15,cat:"MP Geography",topic:"National Parks",prob:"high",
+   q:"Which National Park in MP is famous for its white tiger population?",
+   options:["Kanha","Bandhavgarh","Satpura","Panna"],
+   ans:1,
+   explanation:"Bandhavgarh National Park in Umaria district is famous for the highest density of Bengal tigers in India and is the original home of white tigers. Mohan, the first white tiger, was captured here in 1951."},
+
+  {id:16,cat:"MP Geography",topic:"Dams & Reservoirs",prob:"high",
+   q:"The Bargi Dam is built on which river in Madhya Pradesh?",
+   options:["Betwa","Chambal","Narmada","Tawa"],
+   ans:2,
+   explanation:"Bargi Dam is located near Jabalpur on the Narmada River. It was one of the first major dams built on the Narmada and is used for irrigation and hydroelectric power generation."},
+
+  {id:17,cat:"MP Geography",topic:"Agro-Climatic Zones",prob:"medium",
+   q:"How many agro-climatic zones does Madhya Pradesh have?",
+   options:["7","9","11","13"],
+   ans:2,
+   explanation:"Madhya Pradesh has 11 agro-climatic zones based on soil type, rainfall, and temperature. This diversity allows cultivation of a wide range of crops from wheat and soybean to rice and cotton."},
+
+  {id:18,cat:"MP Geography",topic:"River Linking",prob:"high",
+   q:"The Ken-Betwa River Linking Project connects which two river basins?",
+   options:["Narmada and Tapti","Ken and Betwa","Chambal and Sindh","Son and Rihand"],
+   ans:1,
+   explanation:"The Ken-Betwa Link Project is India's first river-linking project connecting Ken (tributary of Yamuna in MP) to Betwa. MP Budget 2026-27 allocated Rs 44,605 crore for this project."},
+
+  {id:19,cat:"MP Geography",topic:"Census & Demographics",prob:"high",
+   q:"According to Census 2011, what is the literacy rate of Madhya Pradesh?",
+   options:["60.02%","70.63%","75.48%","80.12%"],
+   ans:1,
+   explanation:"MP's literacy rate was 70.63% in Census 2011 (male: 80.53%, female: 60.02%). This was below the national average of 74.04%. Indore has the highest literacy rate among MP districts."},
+
+  {id:20,cat:"MP Geography",topic:"Administrative",prob:"high",
+   q:"How many districts does Madhya Pradesh currently have?",
+   options:["50","52","55","58"],
+   ans:2,
+   explanation:"Madhya Pradesh currently has 55 districts organized into 10 revenue divisions: Bhopal, Indore, Gwalior, Jabalpur, Ujjain, Sagar, Rewa, Shahdol, Chambal, and Narmadapuram. Recent additions include Mauganj, Pandhurna, and Maihar."},
+
+  {id:21,cat:"MP Geography",topic:"Tribes",prob:"high",
+   q:"Which is the largest tribal group in Madhya Pradesh by population?",
+   options:["Gond","Bhil","Kol","Baiga"],
+   ans:1,
+   explanation:"Bhil is the largest tribal group in MP, followed by Gond. MP has the highest tribal population in India. Scheduled Tribes constitute about 21.1% of the total population of the state."},
+
+  {id:22,cat:"MP Geography",topic:"Forest Cover",prob:"high",
+   q:"Which state in India has the highest forest cover in terms of area?",
+   options:["Arunachal Pradesh","Madhya Pradesh","Chhattisgarh","Maharashtra"],
+   ans:1,
+   explanation:"Madhya Pradesh has the highest forest cover in terms of area in India, followed by Arunachal Pradesh. However, in terms of percentage of geographical area, Mizoram and Arunachal Pradesh lead."},
+
+  {id:23,cat:"MP Geography",topic:"Area & Population",prob:"high",
+   q:"What is the total geographical area of Madhya Pradesh?",
+   options:["2,42,000 sq km","3,08,252 sq km","3,56,000 sq km","2,75,000 sq km"],
+   ans:1,
+   explanation:"MP covers 3,08,252 sq km, making it the second-largest state in India by area. The estimated population in 2026 is approximately 8.5 crore (85 million). MP is known as the 'Heart of India' due to its central location."},
+
+  {id:24,cat:"MP Geography",topic:"Largest District",prob:"high",
+   q:"Which is the largest district of Madhya Pradesh by area?",
+   options:["Indore","Jabalpur","Chhindwara","Sagar"],
+   ans:2,
+   explanation:"Chhindwara is the largest district of MP by area with 11,815 sq km. By population, Indore is the most populous district with over 32.7 lakh people (Census 2011). Harda is the least populous district."},
+
+  {id:25,cat:"MP Geography",topic:"Ramsar Sites",prob:"high",
+   q:"How many Ramsar wetland sites does Madhya Pradesh have as of 2024?",
+   options:["3","4","5","7"],
+   ans:2,
+   explanation:"MP has 5 Ramsar sites: Bhoj Wetlands (Bhopal, 2002), Sirpur Wetland (Indore, 2022), Sakhya Sagar (Shivpuri, 2022), Yashwant Sagar (Indore, 2022), and Tawa Reservoir (Narmadapuram, 2024 — the most recent addition)."},
+
+  {id:26,cat:"MP Geography",topic:"Ramsar Sites",prob:"high",
+   q:"Which is the most recent Ramsar wetland site designated in Madhya Pradesh (2024)?",
+   options:["Sirpur Wetland","Bhoj Wetlands","Tawa Reservoir","Sakhya Sagar"],
+   ans:2,
+   explanation:"Tawa Reservoir in Narmadapuram (Satpura Tiger Reserve) was designated as a Ramsar site in 2024, covering 200.5 sq km. It is the most recent addition to MP's Ramsar sites."},
+
+  {id:27,cat:"MP Geography",topic:"Tiger Population",prob:"high",
+   q:"According to the 2022 Tiger Census, how many tigers does Madhya Pradesh have?",
+   options:["526","650","785","900"],
+   ans:2,
+   explanation:"MP recorded 785 tigers in 2022, up from 526 in 2018 — a growth of 259 tigers in four years. Notably, 237 tigers were found outside protected areas. MP has 9 tiger reserves and is called the 'Tiger State'."},
+
+  {id:28,cat:"MP Geography",topic:"Tiger Reserves",prob:"high",
+   q:"How many tiger reserves does Madhya Pradesh have?",
+   options:["6","7","8","9"],
+   ans:3,
+   explanation:"MP has 9 tiger reserves including Kanha, Bandhavgarh, Panna, Satpura, Pench, Sanjay-Dubri, Ratapani, Nauradehi (Veerangana Durgavati), and Madhav National Park (the most recent). Veerangana Durgavati is the largest at 2,339 sq km."},
+
+  {id:29,cat:"MP Geography",topic:"GI Tags",prob:"high",
+   q:"How many registered GI (Geographical Indication) tagged products does Madhya Pradesh have?",
+   options:["12","16","21","25"],
+   ans:2,
+   explanation:"MP has 21 registered GI products including Chanderi Sarees, Maheshwar Sarees, Bagh Prints, Jhabua Kadaknath, Ratlami Sev, Ratlam Garlic, Sharbati Wheat (Sehore), Gond Paintings, Panna Diamonds (2024), and Morena Gajak."},
+
+  {id:30,cat:"MP Geography",topic:"GI Tags 2024",prob:"high",
+   q:"Which MP product received a GI tag in 2024?",
+   options:["Indore Poha","Panna Diamonds","Bhopal Biryani","Ujjain Batik"],
+   ans:1,
+   explanation:"Panna Diamonds received a GI tag in 2024, recognizing the unique geological origin and quality of diamonds from the Panna mines in Madhya Pradesh — India's only major diamond-producing region."},
+
+  // =============================================
+  // SECTION 3: MP CURRENT AFFAIRS 2024-2026 (Q31-68)
+  // =============================================
+  {id:31,cat:"MP Current Affairs",topic:"Budget 2026-27",prob:"high",
+   q:"What is the total size of the Madhya Pradesh Budget 2026-27?",
+   options:["Rs 3.50 lakh crore","Rs 4.38 lakh crore","Rs 5.12 lakh crore","Rs 3.98 lakh crore"],
+   ans:1,
+   explanation:"MP Finance Minister Jagdish Devda presented the state's largest-ever budget of Rs 4,38,317 crore for 2026-27. It was framed around the 'GYANII' model (Garib Kalyan, Yuva Shakti, Annadata, Naari Shakti, Infrastructure, Industry)."},
+
+  {id:32,cat:"MP Current Affairs",topic:"Budget Model",prob:"high",
+   q:"The MP Budget 2026-27 was framed around which model?",
+   options:["SMART","GYANII","AMRIT","PRAGATI"],
+   ans:1,
+   explanation:"GYANII stands for: Garib Kalyan, Yuva Shakti, Annadata, Naari Shakti, Infrastructure, and Industry. This was also MP's first rolling budget with no new taxes imposed for the second consecutive year."},
+
+  {id:33,cat:"MP Current Affairs",topic:"Budget - Finance Minister",prob:"high",
+   q:"Who presented the MP Budget 2026-27 in the state assembly?",
+   options:["CM Mohan Yadav","Rajendra Shukla","Jagdish Devda","Kailash Vijayvargiya"],
+   ans:2,
+   explanation:"Jagdish Devda, the Finance Minister and Deputy CM of Madhya Pradesh, presented the Budget 2026-27. He is one of two Deputy CMs alongside Rajendra Shukla, under CM Dr. Mohan Yadav."},
+
+  {id:34,cat:"MP Current Affairs",topic:"Ladli Behna Yojana",prob:"high",
+   q:"Under the Ladli Behna Yojana (2026), what is the monthly amount being given to eligible women?",
+   options:["Rs 1,000","Rs 1,250","Rs 1,500","Rs 2,000"],
+   ans:1,
+   explanation:"In the 2026-27 budget, Ladli Behna Yojana amount was increased to Rs 1,250/month (from Rs 1,000). Rs 23,882 crore was allocated, covering approximately 1.25 crore (12.5 million) women beneficiaries."},
+
+  {id:35,cat:"MP Current Affairs",topic:"Yashoda Scheme",prob:"high",
+   q:"The 'Yashoda Milk Supply Scheme' targets how many students in MP?",
+   options:["40 lakh","60 lakh","80 lakh","1 crore"],
+   ans:2,
+   explanation:"The Yashoda Milk Supply Scheme provides free tetra-pack milk to students up to Class VIII, targeting 80 lakh students. Rs 700 crore was allocated for 2026-27, with Rs 6,600 crore planned over five years."},
+
+  {id:36,cat:"MP Current Affairs",topic:"DWARAKA Scheme",prob:"high",
+   q:"How much was allocated for the DWARAKA urban infrastructure scheme in MP Budget 2026-27?",
+   options:["Rs 2,000 crore","Rs 3,500 crore","Rs 5,000 crore","Rs 7,500 crore"],
+   ans:2,
+   explanation:"The Dwarkanagar (DWARAKA) Scheme received Rs 5,000 crore investment over three years for urban infrastructure development in Madhya Pradesh cities."},
+
+  {id:37,cat:"MP Current Affairs",topic:"Simhastha",prob:"high",
+   q:"For which upcoming event has the MP government allocated Rs 3,600 crore in the 2026-27 budget?",
+   options:["Khajuraho Dance Festival","Simhastha Kumbh Mela 2028 at Ujjain","Bhopal Smart City Summit","Indore International Trade Fair"],
+   ans:1,
+   explanation:"Rs 3,600 crore has been allocated for preparations of the Simhastha Kumbh Mela 2028 to be held in Ujjain. Simhastha is held every 12 years when Jupiter is in the Leo (Simha) zodiac sign."},
+
+  {id:38,cat:"MP Current Affairs",topic:"Women Empowerment",prob:"high",
+   q:"What is the total allocation for women-centric schemes in the MP Budget 2026-27?",
+   options:["Rs 50,000 crore","Rs 85,000 crore","Rs 1.27 lakh crore","Rs 1.50 lakh crore"],
+   ans:2,
+   explanation:"Rs 1.27 lakh crore was allocated for women-focused initiatives in the 2026-27 budget, including Ladli Behna Yojana, construction of 5,700 hostels for working women, and other women empowerment programs."},
+
+  {id:39,cat:"MP Current Affairs",topic:"Agriculture Budget",prob:"high",
+   q:"What is the allocation for the agriculture sector in the MP Budget 2026-27?",
+   options:["Rs 50,000 crore","Rs 65,000 crore","Rs 88,910 crore","Rs 1.2 lakh crore"],
+   ans:2,
+   explanation:"The agriculture sector received Rs 88,910 crore in the MP Budget 2026-27, reflecting the state's commitment to the 'Annadata' (food provider) pillar of the GYANII model."},
+
+  {id:40,cat:"MP Current Affairs",topic:"Solar Pumps",prob:"medium",
+   q:"How many solar pumps were announced for farmers in the MP Budget 2026-27?",
+   options:["50,000","75,000","1,00,000","1,50,000"],
+   ans:2,
+   explanation:"The MP government announced distribution of 1 lakh (100,000) solar pumps for farmers with an allocation of Rs 3,000 crore in the Budget 2026-27."},
+
+  {id:41,cat:"MP Current Affairs",topic:"Teacher Recruitment",prob:"high",
+   q:"How many teacher posts were announced for recruitment in the MP Budget 2026-27?",
+   options:["5,000","10,000","15,000","20,000"],
+   ans:2,
+   explanation:"The MP Budget 2026-27 announced the recruitment of 15,000 teachers to strengthen the education system in the state."},
+
+  {id:42,cat:"MP Current Affairs",topic:"Healthcare Budget",prob:"high",
+   q:"What is the healthcare budget allocation in the MP Budget 2026-27?",
+   options:["Rs 15,000 crore","Rs 19,500 crore","Rs 23,747 crore","Rs 30,000 crore"],
+   ans:2,
+   explanation:"Rs 23,747 crore was allocated for healthcare in 2026-27. MP has 55 district hospitals, 348 community health centers, 1,442 primary health centers, with a combined bed capacity of 48,000."},
+
+  {id:43,cat:"MP Current Affairs",topic:"Medical Education",prob:"high",
+   q:"How many new government medical colleges were opened in MP in the last two years (2024-2026)?",
+   options:["3","5","7","10"],
+   ans:1,
+   explanation:"Five new government medical colleges were opened in MP, increasing MBBS seats from 2,275 to 2,850 and postgraduate seats from 262 to 1,468 — a major expansion in medical education capacity."},
+
+  {id:44,cat:"MP Current Affairs",topic:"Panchayat & Rural",prob:"high",
+   q:"What is the allocation for Panchayat and Rural Development in the MP Budget 2026-27?",
+   options:["Rs 25,000 crore","Rs 32,000 crore","Rs 40,062 crore","Rs 50,000 crore"],
+   ans:2,
+   explanation:"Rs 40,062 crore was allocated for Panchayat and Rural Development ahead of the 2027 local body elections. The G-RAM-G rural employment scheme alone received Rs 10,428 crore."},
+
+  {id:45,cat:"MP Current Affairs",topic:"Aviation",prob:"medium",
+   q:"The 'Fare Se Fursat' scheme launched from Rewa, MP provides:",
+   options:["Free rail passes to senior citizens","Affordable regional flights","Subsidized bus travel","Free metro passes"],
+   ans:1,
+   explanation:"The 'Fare Se Fursat' scheme launched from Rewa provides affordable regional air connectivity, with initial flights connecting Rewa to Raipur under the regional connectivity initiative."},
+
+  {id:46,cat:"MP Current Affairs",topic:"One District One Product",prob:"medium",
+   q:"Under the 'One District-One Product' initiative of MP, how many districts were initially covered?",
+   options:["5","7","10","12"],
+   ans:1,
+   explanation:"The 'One District-One Product' initiative with Rs 37.50 crore allocation initially covers seven districts, promoting products like carpets, jaggery, handloom textiles, and other local specialties."},
+
+  // --- MP Economic Data 2024-2026 ---
+  {id:47,cat:"MP Current Affairs",topic:"Economic Survey GSDP",prob:"high",
+   q:"As per the MP Economic Survey 2025-26, what is the estimated GSDP growth rate at current prices?",
+   options:["7.5%","9.2%","11.14%","13.5%"],
+   ans:2,
+   explanation:"MP's GSDP is estimated to grow at 11.14% at current prices in 2025-26, reaching Rs 16,69,750 crore (from Rs 15,02,428 crore in 2024-25). The real growth rate at constant prices is 8.04%."},
+
+  {id:48,cat:"MP Current Affairs",topic:"Per Capita Income",prob:"high",
+   q:"What is the estimated per capita income of Madhya Pradesh in 2025-26 at current prices?",
+   options:["Rs 1,20,000","Rs 1,45,000","Rs 1,69,050","Rs 1,95,000"],
+   ans:2,
+   explanation:"Per capita income rose to Rs 1,69,050 at current prices in 2025-26, a four-fold increase from Rs 38,497 in 2011-12. At constant (2011-12) prices, it stands at Rs 76,971."},
+
+  {id:49,cat:"MP Current Affairs",topic:"Sectoral Growth",prob:"high",
+   q:"Which sector recorded the highest growth in the MP Economic Survey 2025-26?",
+   options:["Primary (Agriculture)","Secondary (Manufacturing)","Tertiary (Services)","Mining"],
+   ans:2,
+   explanation:"The Tertiary (Services) sector recorded the highest growth at 15.80%, reaching Rs 5,85,588 crore. Primary sector grew at 7.31% (43.09% of GSVA), and Secondary at 9.93% (Rs 3,12,350 crore)."},
+
+  {id:50,cat:"MP Current Affairs",topic:"Fiscal Deficit",prob:"medium",
+   q:"What is the expected fiscal deficit of Madhya Pradesh for 2025-26?",
+   options:["3.2%","3.8%","4.6%","5.2%"],
+   ans:2,
+   explanation:"The MP Economic Survey 2025-26 projects the fiscal deficit to remain at 4.6% for 2025-26. The state's GSDP at current prices is estimated at Rs 16.69 lakh crore."},
+
+  {id:51,cat:"MP Current Affairs",topic:"Primary Sector",prob:"medium",
+   q:"According to MP Economic Survey 2025-26, what percentage of GSVA comes from the primary sector?",
+   options:["25%","33%","43.09%","51%"],
+   ans:2,
+   explanation:"The primary sector contributes 43.09% of Gross State Value Added (GSVA) with 7.31% growth. Within this, crops account for 30.17% and livestock 7.22%. MP remains predominantly an agriculture state."},
+
+  // --- CM Mohan Yadav & Political Data ---
+  {id:52,cat:"MP Current Affairs",topic:"Chief Minister",prob:"high",
+   q:"Dr. Mohan Yadav became the Chief Minister of Madhya Pradesh on which date?",
+   options:["13 December 2023","15 January 2024","1 December 2023","25 November 2023"],
+   ans:0,
+   explanation:"Dr. Mohan Yadav was sworn in as the 19th Chief Minister of MP on 13 December 2023. He has two Deputy CMs: Rajendra Shukla and Jagdish Devda. The Governor is Mangubhai C. Patel."},
+
+  {id:53,cat:"MP Current Affairs",topic:"Governor",prob:"high",
+   q:"Who is the current Governor of Madhya Pradesh (2024-2026)?",
+   options:["Anandiben Patel","Mangubhai C. Patel","Lalji Tandon","Ram Naik"],
+   ans:1,
+   explanation:"Mangubhai C. Patel serves as the Governor of Madhya Pradesh. He is the constitutional head of the state under Article 153, appointed by the President of India."},
+
+  {id:54,cat:"MP Current Affairs",topic:"Cabinet",prob:"medium",
+   q:"How many women ministers are there in the Mohan Yadav Cabinet?",
+   options:["3","5","7","8"],
+   ans:1,
+   explanation:"The Mohan Yadav Cabinet includes 5 women ministers and 12 members from the OBC category. The cabinet was initially formed with 28 MLAs (18 cabinet ministers + 10 ministers of state) and was expanded in July 2024."},
+
+  {id:55,cat:"MP Current Affairs",topic:"Delimitation Commission",prob:"high",
+   q:"In September 2024, the MP government formed a delimitation commission to:",
+   options:["Redraw Lok Sabha constituencies","Review boundaries of districts and divisions for new districts","Reorganize municipal wards","Redelimit Vidhan Sabha seats"],
+   ans:1,
+   explanation:"CM Mohan Yadav announced plans to create approximately 12 new districts. A three-member delimitation commission headed by retired Additional Chief Secretary Manoj Srivastav was formed to review all district and division boundaries."},
+
+  // --- Krishak Kalyan Varsh 2026 ---
+  {id:56,cat:"MP Current Affairs",topic:"Krishak Kalyan Varsh",prob:"high",
+   q:"CM Mohan Yadav declared the year 2026 as:",
+   options:["Yuva Shakti Varsh","Krishak Kalyan Varsh (Farmer Welfare Year)","Swachh MP Varsh","Digital MP Varsh"],
+   ans:1,
+   explanation:"2026 was declared as 'Krishak Kalyan Varsh' (Farmer Welfare Year). Key initiatives include assembly-wise agriculture conferences with Rs 5 lakh per constituency, machinery on rent, dairy expansion from 9% to 20%, and Rs 1,000/quintal bonus for coarse grains."},
+
+  {id:57,cat:"MP Current Affairs",topic:"Krishak Kalyan - Dairy",prob:"high",
+   q:"Under Krishak Kalyan Varsh 2026, the MP government aims to increase dairy production from 9% to:",
+   options:["12%","15%","18%","20%"],
+   ans:3,
+   explanation:"Under the Farmer Welfare Year 2026, MP plans to expand dairy sector production from 9% to 20%. Milk prices were raised by Rs 5 per liter, and free solar pumps were promised for 30 lakh power connection holders."},
+
+  {id:58,cat:"MP Current Affairs",topic:"Coarse Grains Bonus",prob:"high",
+   q:"What bonus per quintal was announced for coarse grains (kodo and kutki) under Krishak Kalyan Varsh 2026?",
+   options:["Rs 500","Rs 750","Rs 1,000","Rs 1,500"],
+   ans:2,
+   explanation:"A bonus of Rs 1,000 per quintal was announced for coarse grains (kodo and kutki, also called Shree Anna/millets). Mustard was also included under the price difference support scheme."},
+
+  // --- Jal Ganga Campaign ---
+  {id:59,cat:"MP Current Affairs",topic:"Jal Ganga Campaign",prob:"high",
+   q:"The 'Jal Ganga Conservation Campaign 2026' was launched from which city?",
+   options:["Bhopal","Indore","Ujjain","Jabalpur"],
+   ans:2,
+   explanation:"The Jal Ganga Conservation Campaign 2026 was launched on 19 March 2026 from the Shipra River banks in Ujjain. It focuses on rainwater harvesting, groundwater recharge, and community participation, continuing through 30 June 2026."},
+
+  // --- Samadhan Yojana ---
+  {id:60,cat:"MP Current Affairs",topic:"Samadhan Yojana",prob:"high",
+   q:"Under the 'Samadhan Yojana 2025-26', how much electricity surcharge was waived?",
+   options:["Rs 1,000 crore","Rs 2,000 crore","Rs 3,000 crore","Rs 5,000 crore"],
+   ans:2,
+   explanation:"Samadhan Yojana 2025-26 waived Rs 3,000 crore in electricity surcharge for 90 lakh consumers. It offers flexible installment options (up to 6 installments) for pending electricity bills."},
+
+  // --- Cheetah Project ---
+  {id:61,cat:"MP Current Affairs",topic:"Project Cheetah",prob:"high",
+   q:"Which MP wildlife reserve is being developed as India's third cheetah habitat?",
+   options:["Kanha National Park","Ratapani Wildlife Sanctuary","Veerangana Durgavati Tiger Reserve (Nauradehi)","Pench Tiger Reserve"],
+   ans:2,
+   explanation:"Veerangana Durgavati Tiger Reserve (Nauradehi) in Sagar district — MP's largest tiger reserve at 2,339 sq km — is being developed as the third cheetah habitat. CM Yadav laid the foundation for a soft release boma on 25 March 2026. Cheetahs are expected by June 2026."},
+
+  {id:62,cat:"MP Current Affairs",topic:"Project Cheetah",prob:"high",
+   q:"India's first two cheetah habitats are located in which MP wildlife areas?",
+   options:["Kanha and Pench","Bandhavgarh and Satpura","Kuno National Park and Gandhi Sagar Wildlife Sanctuary","Panna and Ratapani"],
+   ans:2,
+   explanation:"Kuno National Park (Sheopur) houses 28 cheetahs (established September 2022), and Gandhi Sagar Wildlife Sanctuary (Mandsaur) houses 3 cheetahs (established April 2025). India's total cheetah population has reached approximately 53."},
+
+  {id:63,cat:"MP Current Affairs",topic:"Cheetah Population",prob:"high",
+   q:"What is India's approximate total cheetah population as of early 2026?",
+   options:["25","35","53","72"],
+   ans:2,
+   explanation:"India has approximately 53 cheetahs as of early 2026, reintroduced under Project Cheetah starting September 2022. Kuno NP has 28 cheetahs, Gandhi Sagar has 3, and the rest includes recent births. Veerangana Durgavati is being prepared as the third habitat."},
+
+  // --- Investment & Industry ---
+  {id:64,cat:"MP Current Affairs",topic:"Global Investors Summit",prob:"high",
+   q:"What was the total investment commitment secured at the MP Global Investors Summit 2025?",
+   options:["Rs 10 lakh crore","Rs 20 lakh crore","Rs 30.77 lakh crore","Rs 45 lakh crore"],
+   ans:2,
+   explanation:"MP secured a record Rs 30.77 lakh crore in investment commitments at the Global Investors Summit held in February 2025 in Bhopal — the 8th edition of Invest Madhya Pradesh, with participation from over 40 countries."},
+
+  {id:65,cat:"MP Current Affairs",topic:"Investment Progress",prob:"high",
+   q:"According to CM Mohan Yadav (2026), how much investment has been operationalized on the ground in MP in two years?",
+   options:["Rs 3 lakh crore","Rs 5 lakh crore","Rs 9 lakh crore","Rs 15 lakh crore"],
+   ans:2,
+   explanation:"CM Yadav stated at the Times Now Summit 2026 that over Rs 9 lakh crore in investments have been operationalized in nearly two years. Major investors include Adani Group (Rs 1.10 lakh crore) and Reliance Industries (Rs 60,000 crore)."},
+
+  // --- Indore & Swachh Bharat ---
+  {id:66,cat:"MP Current Affairs",topic:"Swachh Survekshan",prob:"high",
+   q:"For how many consecutive years has Indore been ranked India's cleanest city in Swachh Survekshan (as of 2025)?",
+   options:["5","6","7","8"],
+   ans:3,
+   explanation:"Indore has been India's cleanest city for 8 consecutive years (Swachh Survekshan 2017-2025). Bhopal ranked 6th in 2025. The 'Basti Bemisal' campaign targets revamping 29 slums ahead of Swachh Survekshan 2026."},
+
+  {id:67,cat:"MP Current Affairs",topic:"Clean Air",prob:"high",
+   q:"Indore secured 1st rank (200/200) in which national survey in 2025?",
+   options:["Smart City Rankings","Swachh Vayu Sarvekshan (Clean Air Survey)","Ease of Living Index","Safety Index"],
+   ans:1,
+   explanation:"Indore secured 1st rank with a perfect 200/200 score in Swachh Vayu Sarvekshan 2025 (cities > 10 lakh population), receiving Rs 1.5 crore. It has planted 16 lakh+ trees and operates 120 electric buses and 150 CNG buses."},
+
+  {id:68,cat:"MP Current Affairs",topic:"Wetland City",prob:"high",
+   q:"Which MP city received international recognition as a 'Wetland City' under the Ramsar Convention in 2025?",
+   options:["Bhopal","Indore","Ujjain","Jabalpur"],
+   ans:1,
+   explanation:"Indore received international recognition as a Wetland City under the Ramsar Convention in 2025. Jabalpur secured 2nd rank (199/200) in clean air, operating an 11 MW waste-to-energy plant."},
+
+  // --- Metro & Infrastructure ---
+  {id:69,cat:"MP Current Affairs",topic:"Indore Metro",prob:"high",
+   q:"The Indore Metro was inaugurated by PM Modi on which date?",
+   options:["15 August 2024","26 January 2025","31 May 2025","2 October 2025"],
+   ans:2,
+   explanation:"Indore Metro was inaugurated by PM Narendra Modi on 31 May 2025. The initial 6.3 km priority corridor of the Yellow Line (Gandhi Nagar to Super Corridor-3) opened in December 2024. The extended 11.5 km corridor is under safety inspection."},
+
+  {id:70,cat:"MP Current Affairs",topic:"Bhopal Metro",prob:"high",
+   q:"The Bhopal Metro (Bhoj Metro) was inaugurated on:",
+   options:["15 August 2025","20 December 2025","26 January 2026","1 March 2026"],
+   ans:1,
+   explanation:"Bhopal Metro (Bhoj Metro) was inaugurated on 20 December 2025 by CM Mohan Yadav and Union Urban Affairs Minister Manohar Lal Khattar. The 7 km elevated Orange Line runs from Subhash Nagar to AIIMS with 8 stations."},
+
+  {id:71,cat:"MP Current Affairs",topic:"Narmada Expressway",prob:"high",
+   q:"The proposed Narmada Expressway in MP will be approximately how long?",
+   options:["600 km","800 km","1,200 km","1,500 km"],
+   ans:2,
+   explanation:"The Narmada Expressway will span 1,200 km at an estimated cost of Rs 31,000 crore, passing through 11 districts (Anuppur, Dindori, Mandla, Jabalpur, Narsinghpur, Hoshangabad, Harda, Khandwa, Khargone, Barwani, Alirajpur) and connecting ~30 national/state highways."},
+
+  {id:72,cat:"MP Current Affairs",topic:"Road Infrastructure",prob:"medium",
+   q:"How much was allocated for road repairs in the MP Budget 2026-27?",
+   options:["Rs 5,000 crore","Rs 8,500 crore","Rs 12,690 crore","Rs 15,000 crore"],
+   ans:2,
+   explanation:"Rs 12,690 crore was allocated for road repairs in the 2026-27 budget. Additional infrastructure projects include the 450 km Malwa Nimar Vikas Path (Rs 7,972 crore) and the 88 km Agra-Gwalior Expressway (Rs 2,500 crore)."},
+
+  // --- Education Data ---
+  {id:73,cat:"MP Current Affairs",topic:"School Education",prob:"high",
+   q:"According to UDISE+ 2024-25 data, approximately how many schools operate in Madhya Pradesh?",
+   options:["85,000","1,00,000","1,22,120","1,50,000"],
+   ans:2,
+   explanation:"MP operates 1,22,120 schools serving 1,52,72,607 students through 7,17,493 teachers (UDISE+ 2024-25). MP has the third-largest school-age population in India (1.32 crore children aged 6-17) after UP and Bihar."},
+
+  {id:74,cat:"MP Current Affairs",topic:"MBBS Seats",prob:"high",
+   q:"MBBS seats in MP government medical colleges have been increased from 2,275 to:",
+   options:["2,500","2,650","2,850","3,100"],
+   ans:2,
+   explanation:"MBBS seats increased from 2,275 to 2,850 and PG seats from 262 to 1,468 over two years (2024-2026) with 5 new government medical colleges opened. Healthcare budget stands at Rs 23,747 crore for 2026-27."},
+
+  // --- MP Supply Chain / PDS ---
+  {id:75,cat:"MP Current Affairs",topic:"PDS Infrastructure",prob:"medium",
+   q:"Approximately how many fair price (ration) shops operate in Madhya Pradesh?",
+   options:["15,000","20,000","28,096","35,000"],
+   ans:2,
+   explanation:"As per MP's Integrated Automated e-Supply Chain Management (IAeSCM) portal (scm.mp.gov.in), approximately 28,096 fair price shops operate across the state, distributing wheat and rice through 308 issue points."},
+
+  // --- GI Tags Proposed 2026 ---
+  {id:76,cat:"MP Current Affairs",topic:"GI Tag Proposals 2026",prob:"high",
+   q:"In 2026, MP proposed GI certification for which traditional tribal crop from Dindori district?",
+   options:["Basmati Rice","Sitahi Kutki (Little Millet)","Ratlam Garlic","Sharbati Wheat"],
+   ans:1,
+   explanation:"MP proposed GI certification for three tribal crops: Sitahi Kutki (60-day Little Millet cultivated across 10,395 hectares in Dindori), Nagdaman Kutki, and Baingani Arhar (Purple Pigeon Pea). Documentation was prepared by JNAU, Jabalpur. This aims to benefit ~60,000 tribal farmers."},
+
+  // --- Sports Achievements ---
+  {id:77,cat:"MP Current Affairs",topic:"MP Sports",prob:"high",
+   q:"MP's Aishwary Pratap Singh Tomar achieved which feat at the Asian Shooting Championship in February 2026?",
+   options:["Silver medal","Gold medal with world record","Bronze medal","Participation award"],
+   ans:1,
+   explanation:"Aishwary Pratap Singh Tomar scripted history with a world record gold at the Asian Shooting Championship in February 2026. The MP State Shooting Academy clinched 6 medals total at the event."},
+
+  {id:78,cat:"MP Current Affairs",topic:"MP Sports Policy",prob:"medium",
+   q:"Under MP's new sports policy, Olympic/CWG/Asian Games medallists will receive:",
+   options:["Rs 50 lakh cash prize","Gazetted officer status","Free lifetime metro pass","Free land allocation"],
+   ans:1,
+   explanation:"Madhya Pradesh's overhauled sports policy grants Olympic, CWG, and Asian Games medallists Gazetted officer status. Sapna Sharma from Indore won her 4th consecutive Para Taekwondo National gold, and Kranti Gaur contributed to India's 2025 Women's Cricket World Cup victory."},
+
+  {id:79,cat:"MP Current Affairs",topic:"MP Cricket",prob:"medium",
+   q:"MP's Kranti Gaur contributed to which major cricket achievement in 2025?",
+   options:["IPL Championship","Ranji Trophy win","India's Women's Cricket World Cup victory","U-19 World Cup win"],
+   ans:2,
+   explanation:"Kranti Gaur from Madhya Pradesh contributed to India's 2025 Women's Cricket World Cup victory and received a Rs 1 crore state award. MP has a growing ecosystem of sports talent across shooting, athletics, and martial arts."},
+
+  // --- Cabinet & Policy Decisions ---
+  {id:80,cat:"MP Current Affairs",topic:"Cabinet Decisions 2025",prob:"high",
+   q:"How much was approved by the MP Cabinet in March 2025 for continuation of welfare schemes?",
+   options:["Rs 15,000 crore","Rs 22,500 crore","Rs 33,240 crore","Rs 45,000 crore"],
+   ans:2,
+   explanation:"Rs 33,240 crore was approved for continuation of key welfare schemes over five years. Other decisions included Rs 190 crore for CM Young Interns for Good Governance (3 years) and Rs 6,090 crore for mineral surcharge transfer to rural infrastructure."},
+
+  {id:81,cat:"MP Current Affairs",topic:"Singhsthan Road",prob:"medium",
+   q:"How much was approved by the MP Cabinet for the Singhsthan event road project?",
+   options:["Rs 500 crore","Rs 750 crore","Rs 945 crore","Rs 1,200 crore"],
+   ans:2,
+   explanation:"The MP Cabinet approved a Rs 945 crore, 5.5 km road for the Singhsthan event, alongside a Rs 228 crore irrigation project in Rewa district and Rs 4,525 crore continuation of PWD projects."},
+
+  {id:82,cat:"MP Current Affairs",topic:"Tiger Deaths",prob:"high",
+   q:"Madhya Pradesh recorded how many tiger deaths in 2025 — the highest among Indian states?",
+   options:["25","40","55","70"],
+   ans:2,
+   explanation:"MP recorded 55 tiger deaths in 2025, the highest among Indian states. India lost 166 tigers total in 2025 (40 more than the previous year). Experts attribute this to territorial infighting as the tiger population has grown 60% since 2014, reaching saturation."},
+
+  {id:83,cat:"MP Current Affairs",topic:"Tiger Census 2026",prob:"high",
+   q:"The All India Tiger Estimation (AITE) 2026 uses which mobile application for field data?",
+   options:["Tiger Track Pro","M-STRiPES","WildSense","PugMark AI"],
+   ans:1,
+   explanation:"The AITE 2026 uses the M-STRiPES mobile application for real-time data upload on 10-15 parameters including pugmarks, scat, roars, and geo-tagged photos. The census began in December 2025 with field surveys and employs camera trapping and DNA analysis."},
+
+  // --- Jal Jeevan Mission ---
+  {id:84,cat:"MP Current Affairs",topic:"Jal Jeevan Mission",prob:"medium",
+   q:"How much was allocated for Jal Jeevan Mission in the MP Budget 2026-27?",
+   options:["Rs 2,000 crore","Rs 3,200 crore","Rs 4,454 crore","Rs 6,000 crore"],
+   ans:2,
+   explanation:"Rs 4,454 crore was allocated for Jal Jeevan Mission in the 2026-27 budget, aimed at providing Functional Household Tap Connections to every rural household. The AMRUT 2.0 urban water project received Rs 3,467 crore."},
+
+  {id:85,cat:"MP Current Affairs",topic:"ESIC",prob:"medium",
+   q:"How many new ESIC dispensaries were approved by the MP Cabinet in March 2025?",
+   options:["2","3","5","7"],
+   ans:1,
+   explanation:"The MP Cabinet approved three new ESIC dispensaries with creation of 51 posts for healthcare staff. Professional tax exemption for persons with disabilities was continued until March 31, 2030."},
+
+  // =============================================
+  // SECTION 4: INDIAN POLITY (Q86-95)
+  // =============================================
+  {id:86,cat:"Indian Polity",topic:"Constitutional Provisions",prob:"high",
+   q:"Which Article of the Indian Constitution deals with the abolition of untouchability?",
+   options:["Article 14","Article 15","Article 17","Article 19"],
+   ans:2,
+   explanation:"Article 17 abolishes untouchability and forbids its practice in any form. The Protection of Civil Rights Act, 1955 (originally Untouchability Offences Act) provides penalties for its enforcement."},
+
+  {id:87,cat:"Indian Polity",topic:"Panchayati Raj",prob:"high",
+   q:"The 73rd Constitutional Amendment Act is related to:",
+   options:["Municipalities","Panchayati Raj Institutions","Cooperative Societies","Anti-Defection Law"],
+   ans:1,
+   explanation:"The 73rd Amendment (1992) gave constitutional status to Panchayati Raj Institutions. It introduced Part IX and Schedule 11 to the Constitution, mandating a three-tier system of Panchayats."},
+
+  {id:88,cat:"Indian Polity",topic:"Fundamental Rights",prob:"medium",
+   q:"Right to Education (Article 21A) was added by which Constitutional Amendment?",
+   options:["86th Amendment","91st Amendment","93rd Amendment","97th Amendment"],
+   ans:0,
+   explanation:"The 86th Constitutional Amendment Act, 2002 inserted Article 21A, making free and compulsory education a fundamental right for children aged 6-14 years."},
+
+  {id:89,cat:"Indian Polity",topic:"Governor",prob:"high",
+   q:"Who appoints the Governor of a State in India?",
+   options:["Chief Minister","Prime Minister","President","Chief Justice of India"],
+   ans:2,
+   explanation:"Under Article 155, the Governor is appointed by the President of India. The Governor holds office during the pleasure of the President (Article 156). The current MP Governor is Mangubhai C. Patel."},
+
+  {id:90,cat:"Indian Polity",topic:"Schedules",prob:"high",
+   q:"The Fifth Schedule of the Indian Constitution deals with:",
+   options:["Languages recognized by the Constitution","Administration of Scheduled Areas and Scheduled Tribes","Division of powers between Centre and States","Anti-defection provisions"],
+   ans:1,
+   explanation:"The Fifth Schedule deals with administration and control of Scheduled Areas and Scheduled Tribes. Several areas in MP fall under the Fifth Schedule. The Sixth Schedule deals with tribal areas in NE India."},
+
+  {id:91,cat:"Indian Polity",topic:"Constitutional Bodies",prob:"medium",
+   q:"The Finance Commission is constituted by the President under which Article?",
+   options:["Article 256","Article 280","Article 300","Article 312"],
+   ans:1,
+   explanation:"Article 280 mandates the President to constitute a Finance Commission every five years to recommend distribution of tax revenues between the Centre and States. The 16th Finance Commission is currently working."},
+
+  {id:92,cat:"Indian Polity",topic:"Elections",prob:"high",
+   q:"Under which Article of the Constitution is the Election Commission of India established?",
+   options:["Article 280","Article 312","Article 324","Article 352"],
+   ans:2,
+   explanation:"Article 324 vests the superintendence, direction, and control of elections to Parliament, State Legislatures, and offices of President and Vice President in the Election Commission."},
+
+  {id:93,cat:"Indian Polity",topic:"Amendments",prob:"high",
+   q:"Which Constitutional Amendment introduced the concept of 'Cooperative Societies' as a fundamental right?",
+   options:["91st Amendment","95th Amendment","97th Amendment","101st Amendment"],
+   ans:2,
+   explanation:"The 97th Constitutional Amendment Act, 2011 gave constitutional status to cooperative societies. It inserted Article 19(1)(c), Part IXB, and added 'cooperative societies' to the Directive Principles."},
+
+  {id:94,cat:"Indian Polity",topic:"PESA Act",prob:"high",
+   q:"The Panchayats (Extension to Scheduled Areas) Act, 1996 (PESA) is significant for MP because:",
+   options:["It created new districts","It empowers tribal self-governance in Fifth Schedule areas","It increased state government salaries","It reformed urban local bodies"],
+   ans:1,
+   explanation:"PESA Act 1996 extends Panchayati Raj to Fifth Schedule areas, empowering tribal communities with self-governance rights over natural resources, dispute resolution, and development. MP has significant tribal population (21.1%) and Fifth Schedule areas."},
+
+  {id:95,cat:"Indian Polity",topic:"State Legislature",prob:"high",
+   q:"The Madhya Pradesh Vidhan Sabha has how many seats?",
+   options:["200","230","231","250"],
+   ans:2,
+   explanation:"The MP Vidhan Sabha (Legislative Assembly) has 231 seats. It is a unicameral legislature. In the 2023 elections, BJP won 163 seats under the leadership of Shivraj Singh Chouhan, after which Dr. Mohan Yadav became CM."},
+
+  // =============================================
+  // SECTION 5: INDIAN HISTORY (Q96-101)
+  // =============================================
+  {id:96,cat:"Indian History",topic:"Ancient India",prob:"high",
+   q:"The Indus Valley Civilization site 'Lothal' is located in which modern Indian state?",
+   options:["Rajasthan","Gujarat","Haryana","Punjab"],
+   ans:1,
+   explanation:"Lothal is located in Gujarat and was an important port city of the Indus Valley Civilization. It had the world's earliest known dock, and was a center of bead-making and trade with Mesopotamia."},
+
+  {id:97,cat:"Indian History",topic:"Medieval India",prob:"medium",
+   q:"The Bhakti movement saint Kabir was a disciple of:",
+   options:["Vallabhacharya","Ramananda","Shankaracharya","Chaitanya Mahaprabhu"],
+   ans:1,
+   explanation:"Kabir Das was a 15th-century mystic poet and saint who was a disciple of Ramananda. He preached unity of God and rejected ritualism, influencing both Hindu and Muslim traditions."},
+
+  {id:98,cat:"Indian History",topic:"Modern India",prob:"high",
+   q:"Who founded the Indian National Congress in 1885?",
+   options:["Dadabhai Naoroji","Allan Octavian Hume","Surendranath Banerjee","W.C. Bonnerjee"],
+   ans:1,
+   explanation:"Allan Octavian Hume, a retired British civil servant, founded the INC in 1885. The first session was held in Bombay (Mumbai) under the presidency of W.C. Bonnerjee with 72 delegates."},
+
+  {id:99,cat:"Indian History",topic:"Modern India",prob:"high",
+   q:"The Quit India Movement was launched in which year?",
+   options:["1930","1940","1942","1946"],
+   ans:2,
+   explanation:"The Quit India Movement (Bharat Chhodo Andolan) was launched on 8 August 1942 at the AICC session in Bombay. Gandhi gave the call 'Do or Die'. Major leaders were immediately arrested."},
+
+  {id:100,cat:"Indian History",topic:"Maurya Empire",prob:"high",
+   q:"Kautilya's Arthashastra is primarily about:",
+   options:["Philosophy and religion","Statecraft, economic policy, and military strategy","Mathematics and astronomy","Medicine and surgery"],
+   ans:1,
+   explanation:"Arthashastra by Kautilya (Chanakya) is an ancient Indian treatise on statecraft, economic policy, and military strategy written in the Mauryan period (c. 3rd century BCE). It covers governance, law, taxation, and diplomacy."},
+
+  {id:101,cat:"Indian History",topic:"MP in Freedom Struggle",prob:"high",
+   q:"The Flag Satyagraha of 1923 in Jabalpur was led by which freedom fighter?",
+   options:["Seth Govind Das","Rani Durgavati","Tantia Tope","Chandrashekhar Azad"],
+   ans:0,
+   explanation:"Seth Govind Das led the Flag Satyagraha of 1923 in Jabalpur, asserting the right to hoist the national flag. Jabalpur was a major center of the freedom movement in central India."},
+
+  // =============================================
+  // SECTION 6: INDIAN GEOGRAPHY (Q102-107)
+  // =============================================
+  {id:102,cat:"Indian Geography",topic:"Physical Geography",prob:"high",
+   q:"The Western Ghats are a UNESCO biodiversity hotspot. They extend from which state to which state?",
+   options:["Maharashtra to Karnataka","Gujarat to Tamil Nadu","Gujarat to Kerala","Maharashtra to Kerala"],
+   ans:1,
+   explanation:"The Western Ghats extend from Gujarat (Songadh Hills near Surat) through Maharashtra, Goa, Karnataka, Kerala to Tamil Nadu. They span about 1,600 km and contain 39 UNESCO World Heritage properties."},
+
+  {id:103,cat:"Indian Geography",topic:"Climate",prob:"medium",
+   q:"Which type of soil is most suitable for cotton cultivation in India?",
+   options:["Alluvial soil","Black soil (Regur)","Laterite soil","Red soil"],
+   ans:1,
+   explanation:"Black soil (Regur) is ideal for cotton cultivation due to its high moisture retention capacity. It is formed from weathering of basaltic lava and is found in the Deccan Plateau, Maharashtra, Gujarat, and MP."},
+
+  {id:104,cat:"Indian Geography",topic:"Agriculture",prob:"high",
+   q:"India ranks first in the world in the production of which spice?",
+   options:["Pepper","Chilli","Turmeric","Cardamom"],
+   ans:0,
+   explanation:"India is the largest producer, consumer, and exporter of spices in the world. India ranks first globally in the production of pepper, chilli, turmeric, ginger, and several other spices."},
+
+  {id:105,cat:"Indian Geography",topic:"Disaster Management",prob:"high",
+   q:"The National Disaster Management Authority (NDMA) is headed by:",
+   options:["Home Minister","Prime Minister","Defence Minister","President"],
+   ans:1,
+   explanation:"NDMA is chaired by the Prime Minister of India. It was established under the Disaster Management Act, 2005. State Disaster Management Authorities are headed by the respective Chief Ministers."},
+
+  {id:106,cat:"Indian Geography",topic:"MP Agriculture Rank",prob:"high",
+   q:"Madhya Pradesh is the largest producer of which crop in India?",
+   options:["Rice","Wheat","Soybean","Cotton"],
+   ans:2,
+   explanation:"Madhya Pradesh is the largest producer of soybean in India, earning the nickname 'Soya State'. MP also leads in production of pulses, gram (chana), and is a major wheat producer. Agriculture contributes 43.09% to GSVA."},
+
+  {id:107,cat:"Indian Geography",topic:"Narmada River",prob:"high",
+   q:"Narmada is one of only three major Indian rivers that flow westward. Which of the following also flows westward?",
+   options:["Godavari","Krishna","Tapti (Tapi)","Kaveri"],
+   ans:2,
+   explanation:"Narmada and Tapti (Tapi) are the two major west-flowing peninsular rivers draining into the Arabian Sea. The third major west-flowing river is the Mahi. Most other peninsular rivers flow eastward into the Bay of Bengal."},
+
+  // =============================================
+  // SECTION 7: SCIENCE & ENVIRONMENT (Q108-118)
+  // =============================================
+  {id:108,cat:"Science & Environment",topic:"Ecology",prob:"high",
+   q:"An ecotone is:",
+   options:["A zone of interaction between two ecosystems","A type of biome found in deserts","An invasive species habitat","A marine ecosystem near coral reefs"],
+   ans:0,
+   explanation:"An ecotone is a transitional zone between two adjacent ecological communities (ecosystems). It contains species from both communities and often has greater biodiversity (edge effect)."},
+
+  {id:109,cat:"Science & Environment",topic:"Pollution",prob:"high",
+   q:"Minamata disease is caused by pollution from which element?",
+   options:["Lead","Cadmium","Mercury","Arsenic"],
+   ans:2,
+   explanation:"Minamata disease is caused by mercury poisoning through consumption of contaminated seafood. It was first identified in Minamata city, Japan in 1956 due to industrial mercury discharge."},
+
+  {id:110,cat:"Science & Environment",topic:"Biodiversity",prob:"high",
+   q:"Which of the following is NOT a biodiversity hotspot in India?",
+   options:["Western Ghats","Eastern Himalayas","Sundarbans","Indo-Burma region"],
+   ans:2,
+   explanation:"India has 4 biodiversity hotspots: Western Ghats, Eastern Himalayas, Indo-Burma region, and Sundaland. The Sundarbans, while ecologically important, is not classified as a biodiversity hotspot."},
+
+  {id:111,cat:"Science & Environment",topic:"Health Science",prob:"medium",
+   q:"Which vitamin deficiency causes night blindness?",
+   options:["Vitamin B","Vitamin C","Vitamin A","Vitamin D"],
+   ans:2,
+   explanation:"Vitamin A (retinol) deficiency causes night blindness (nyctalopia). Vitamin A is essential for the formation of rhodopsin, the light-sensitive pigment in rod cells of the retina."},
+
+  {id:112,cat:"Science & Environment",topic:"Environmental Acts",prob:"high",
+   q:"The Environment Protection Act was enacted in India in which year?",
+   options:["1972","1981","1986","1991"],
+   ans:2,
+   explanation:"The Environment Protection Act was enacted in 1986 following the Bhopal Gas Tragedy (1984). It empowers the Central Government to take measures for environmental protection and prevention of pollution."},
+
+  {id:113,cat:"Science & Environment",topic:"Space & Technology",prob:"high",
+   q:"India's Chandrayaan-3 successfully landed near which region of the Moon?",
+   options:["Mare Tranquillitatis","South Pole","North Pole","Oceanus Procellarum"],
+   ans:1,
+   explanation:"Chandrayaan-3 landed near the lunar South Pole on 23 August 2023, making India the first country to land near the Moon's south polar region and the fourth country to achieve a soft landing on the Moon."},
+
+  {id:114,cat:"Science & Environment",topic:"Climate Change",prob:"high",
+   q:"India's net-zero carbon emission target year is:",
+   options:["2030","2047","2050","2070"],
+   ans:3,
+   explanation:"At COP26 in Glasgow (2021), PM Modi announced India's target to achieve net-zero carbon emissions by 2070. India also committed to 50% energy from renewable sources by 2030."},
+
+  {id:115,cat:"Science & Environment",topic:"Renewable Energy",prob:"high",
+   q:"Which state in India has the highest installed solar energy capacity?",
+   options:["Gujarat","Rajasthan","Karnataka","Tamil Nadu"],
+   ans:1,
+   explanation:"Rajasthan leads India in installed solar energy capacity due to its vast desert terrain and high solar irradiance. India's total solar capacity has crossed 80 GW as part of the 500 GW renewable target by 2030."},
+
+  {id:116,cat:"Science & Environment",topic:"Water Conservation",prob:"medium",
+   q:"The Jal Jeevan Mission aims to provide:",
+   options:["Clean drinking water through taps to every rural household","Interlinking of all major rivers","Rainwater harvesting in all urban areas","Desalination plants on all coastlines"],
+   ans:0,
+   explanation:"Jal Jeevan Mission aims to provide Functional Household Tap Connection (FHTC) to every rural household. MP Budget 2026-27 allocated Rs 4,454 crore for this mission."},
+
+  {id:117,cat:"Science & Environment",topic:"Bhopal Gas Tragedy",prob:"high",
+   q:"The Bhopal Gas Tragedy of 1984 was caused by the leakage of which gas?",
+   options:["Carbon monoxide","Methyl isocyanate (MIC)","Hydrogen sulfide","Chlorine"],
+   ans:1,
+   explanation:"The Bhopal Gas Tragedy (2-3 December 1984) was caused by leakage of Methyl Isocyanate (MIC) from the Union Carbide pesticide plant. It remains the world's worst industrial disaster, killing thousands and leading to the Environment Protection Act, 1986."},
+
+  {id:118,cat:"Science & Environment",topic:"MP National Parks",prob:"high",
+   q:"Which MP national park was the first in India to be included in Project Tiger (1973)?",
+   options:["Bandhavgarh","Panna","Kanha","Satpura"],
+   ans:2,
+   explanation:"Kanha National Park was one of the original nine tiger reserves included in Project Tiger in 1973. It is known for saving the Barasingha (hard-ground swamp deer) from extinction. The Sal and bamboo forests of Kanha inspired Rudyard Kipling's 'The Jungle Book'."},
+
+  // =============================================
+  // SECTION 8: INDIAN ECONOMY (Q119-127)
+  // =============================================
+  {id:119,cat:"Indian Economy",topic:"Planning & Policy",prob:"high",
+   q:"NITI Aayog replaced which body in 2015?",
+   options:["Finance Commission","Planning Commission","Reserve Bank of India","National Development Council"],
+   ans:1,
+   explanation:"NITI Aayog (National Institution for Transforming India) replaced the Planning Commission on 1 January 2015. Unlike the Planning Commission, NITI Aayog serves as a think tank with a bottom-up approach."},
+
+  {id:120,cat:"Indian Economy",topic:"Fiscal Policy",prob:"high",
+   q:"Which of the following is NOT a component of GST in India?",
+   options:["CGST","SGST","IGST","RGST"],
+   ans:3,
+   explanation:"GST has three components: CGST (Central), SGST (State), and IGST (Integrated, for inter-state transactions). RGST does not exist. GST was implemented from 1 July 2017 under the 101st Amendment."},
+
+  {id:121,cat:"Indian Economy",topic:"Banking",prob:"medium",
+   q:"The concept of 'Mudra Bank' is associated with:",
+   options:["Financing to large industries","Refinancing to micro-enterprises","Agricultural credit","Housing loans"],
+   ans:1,
+   explanation:"MUDRA (Micro Units Development & Refinance Agency) Bank was launched in 2015 to provide refinancing to micro-enterprises. It offers three categories: Shishu (up to Rs 50,000), Kishore (up to Rs 5 lakh), and Tarun (up to Rs 10 lakh)."},
+
+  {id:122,cat:"Indian Economy",topic:"Digital Economy",prob:"high",
+   q:"The PM Vishwakarma Yojana (2023) is aimed at:",
+   options:["Farmers","Traditional artisans and craftspeople","Startups","IT professionals"],
+   ans:1,
+   explanation:"PM Vishwakarma Yojana launched in 2023 supports traditional artisans and craftspeople working with their hands and tools. It covers 18 trades including carpentry, blacksmithing, pottery, and tailoring."},
+
+  {id:123,cat:"Indian Economy",topic:"Financial Inclusion",prob:"high",
+   q:"Under PM Jan Dhan Yojana, accounts can be opened with:",
+   options:["Minimum Rs 500","Minimum Rs 1000","Zero balance","Minimum Rs 100"],
+   ans:2,
+   explanation:"PMJDY launched on 28 August 2014 enables opening zero-balance bank accounts. It provides a RuPay debit card and an accident insurance cover of Rs 2 lakh, and overdraft facility of Rs 10,000."},
+
+  {id:124,cat:"Indian Economy",topic:"MP Economy Rank",prob:"high",
+   q:"What is the estimated GSDP of Madhya Pradesh for 2025-26 at current prices?",
+   options:["Rs 10.5 lakh crore","Rs 12.8 lakh crore","Rs 16.69 lakh crore","Rs 20.1 lakh crore"],
+   ans:2,
+   explanation:"MP's GSDP is estimated at Rs 16,69,750 crore at current prices for 2025-26 (Economic Survey 2025-26), growing at 11.14%. At constant prices it stands at Rs 7,81,911 crore with 8.04% real growth."},
+
+  {id:125,cat:"Indian Economy",topic:"MP Investment",prob:"high",
+   q:"Which company made the largest investment pledge at the MP Global Investors Summit 2025?",
+   options:["Reliance Industries","Tata Group","Adani Group","NTPC"],
+   ans:2,
+   explanation:"Adani Group pledged Rs 1.10 lakh crore across pumped storage, cement, mining, smart meters, and thermal energy. Reliance Industries pledged Rs 60,000 crore. Total commitments reached Rs 30.77 lakh crore with 40+ countries participating."},
+
+  {id:126,cat:"Indian Economy",topic:"MP Mineral Revenue",prob:"medium",
+   q:"How much was approved from mineral surcharge for transfer to rural infrastructure in MP (March 2025)?",
+   options:["Rs 2,000 crore","Rs 4,000 crore","Rs 6,090 crore","Rs 8,000 crore"],
+   ans:2,
+   explanation:"Rs 6,090.12 crore from mineral surcharge was approved for transfer to rural infrastructure development. A new Civil Court was also established in Chitrangli, Singrauli district."},
+
+  {id:127,cat:"Indian Economy",topic:"CM Interns Program",prob:"medium",
+   q:"How much was allocated for the CM Young Interns for Good Governance Program?",
+   options:["Rs 50 crore","Rs 100 crore","Rs 190 crore","Rs 250 crore"],
+   ans:2,
+   explanation:"Rs 190 crore was allocated for the Chief Minister Young Interns for Good Governance Program over 3 years, aimed at involving youth in governance and policy-making in Madhya Pradesh."},
+
+  // =============================================
+  // SECTION 9: ICT & TECHNOLOGY (Q128-131)
+  // =============================================
+  {id:128,cat:"ICT & Technology",topic:"Digital India",prob:"high",
+   q:"UPI (Unified Payments Interface) was developed by:",
+   options:["Reserve Bank of India","NPCI (National Payments Corporation of India)","SBI","NITI Aayog"],
+   ans:1,
+   explanation:"UPI was developed by NPCI and launched in April 2016. It enables instant real-time payment between bank accounts through mobile phones. India leads globally in digital transactions via UPI."},
+
+  {id:129,cat:"ICT & Technology",topic:"Cybersecurity",prob:"medium",
+   q:"Which Indian government initiative aims to provide cybersecurity framework for the country?",
+   options:["Digital India","National Cyber Security Policy","CERT-In","All of the above"],
+   ans:3,
+   explanation:"India's cybersecurity ecosystem includes the National Cyber Security Policy (2013), CERT-In (Indian Computer Emergency Response Team), and Digital India initiative. CERT-In is the nodal agency for cybersecurity incidents."},
+
+  {id:130,cat:"ICT & Technology",topic:"E-Governance",prob:"high",
+   q:"Aadhaar number is a:",
+   options:["8-digit number","10-digit number","12-digit number","16-digit number"],
+   ans:2,
+   explanation:"Aadhaar is a 12-digit unique identity number issued by UIDAI (Unique Identification Authority of India) to residents of India. It serves as proof of identity and is used for DBT (Direct Benefit Transfer)."},
+
+  {id:131,cat:"ICT & Technology",topic:"MP Digital Governance",prob:"high",
+   q:"The CM Dashboard portal (cmdashboard.mp.gov.in) is used for:",
+   options:["Online tax filing","Real-time monitoring of government schemes and KPIs","E-commerce marketplace","Digital land records"],
+   ans:1,
+   explanation:"The CM Dashboard (cmdashboard.mp.gov.in) monitors Key Performance Indicators across various departments, enabling real-time tracking of government scheme implementation and progress across all 55 districts of MP."},
+
+  // =============================================
+  // SECTION 10: SPORTS (Q132-136)
+  // =============================================
+  {id:132,cat:"Sports",topic:"Olympics",prob:"high",
+   q:"Neeraj Chopra won India's first-ever Olympic gold medal in athletics at the 2020 Tokyo Olympics in which event?",
+   options:["Shot Put","Discus Throw","Javelin Throw","Hammer Throw"],
+   ans:2,
+   explanation:"Neeraj Chopra won the gold medal in javelin throw at the 2020 Tokyo Olympics (held in 2021) with a throw of 87.58 meters, becoming the first Indian to win an Olympic gold in athletics."},
+
+  {id:133,cat:"Sports",topic:"Cricket",prob:"medium",
+   q:"IPL 2026 (19th season) features how many teams?",
+   options:["8","10","12","14"],
+   ans:1,
+   explanation:"The IPL expanded to 10 teams from 2022 onwards with the addition of Gujarat Titans and Lucknow Super Giants. The 2026 IPL is the 19th season of the tournament."},
+
+  {id:134,cat:"Sports",topic:"MP Sports Infrastructure",prob:"high",
+   q:"The Aishbagh Stadium in Bhopal is primarily associated with which sport?",
+   options:["Cricket","Football","Hockey","Swimming"],
+   ans:1,
+   explanation:"Aishbagh Stadium in Bhopal is a football stadium with a capacity of approximately 15,000. Madhya Pradesh has produced notable sportspersons in shooting, cricket, athletics, and martial arts."},
+
+  {id:135,cat:"Sports",topic:"MP Shooting Academy",prob:"high",
+   q:"The MP State Shooting Academy clinched how many medals at the Asian Shooting Championship in February 2026?",
+   options:["3","4","6","8"],
+   ans:2,
+   explanation:"The MP State Shooting Academy won 6 medals at the Asian Shooting Championship (Feb 2026), including Aishwary Pratap Singh Tomar's world record gold. Suraj Sharma also won 6 individual medals at the event."},
+
+  {id:136,cat:"Sports",topic:"Khelo India",prob:"medium",
+   q:"MP's Bushra Khan won gold in which event at the Khelo India University Games 2025 in Jaipur?",
+   options:["100m Sprint","Long Jump","5000m Athletics","Shot Put"],
+   ans:2,
+   explanation:"Bushra Khan won gold in the 5000m race at the Khelo India University Games 2025 in Jaipur with a time of 18:15.27. MP athletes also excelled in Pencak Silat, Para Taekwondo, and other events."},
+];
+
+let currentCat = "all";
+let currentMode = "study";
+let currentProb = "all";
+let userAnswers = {};
+let answersRevealed = {};
+
+const cats = [...new Set(questions.map(q=>q.cat))];
+
+function init(){
+  document.getElementById("totalQ").textContent = questions.length;
+  document.getElementById("highP").textContent = questions.filter(q=>q.prob==="high").length;
+  document.getElementById("categories").textContent = cats.length;
+
+  const tabsHtml = `<button class="tab active" onclick="setCat('all')">All (${questions.length})</button>` +
+    cats.map(c=>{
+      const count = questions.filter(q=>q.cat===c).length;
+      return `<button class="tab" onclick="setCat('${c}')">${c} (${count})</button>`;
+    }).join("");
+  document.getElementById("tabsContainer").innerHTML = tabsHtml;
+  renderQuestions();
+}
+
+function setCat(cat){
+  currentCat = cat;
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  event.target.classList.add("active");
+  renderQuestions();
+}
+
+function setMode(mode){
+  currentMode = mode;
+  document.querySelectorAll(".mode-btn").forEach(b=>b.classList.remove("active"));
+  event.target.classList.add("active");
+  userAnswers = {};
+  answersRevealed = {};
+  document.getElementById("scorePanel").style.display = "none";
+  renderQuestions();
+}
+
+function setProb(p){
+  currentProb = p;
+  document.querySelectorAll(".prob-btn").forEach(b=>b.classList.remove("active"));
+  event.target.classList.add("active");
+  renderQuestions();
+}
+
+function getFiltered(){
+  let qs = questions;
+  if(currentCat!=="all") qs = qs.filter(q=>q.cat===currentCat);
+  if(currentProb!=="all") qs = qs.filter(q=>q.prob===currentProb);
+  const search = document.getElementById("searchInput").value.toLowerCase();
+  if(search) qs = qs.filter(q=>q.q.toLowerCase().includes(search)||q.topic.toLowerCase().includes(search)||q.cat.toLowerCase().includes(search));
+  return qs;
+}
+
+function renderQuestions(){
+  const qs = getFiltered();
+  const answered = qs.filter(q=>userAnswers[q.id]!==undefined).length;
+  const pct = qs.length ? Math.round(answered/qs.length*100) : 0;
+  document.getElementById("progressFill").style.width = pct+"%";
+
+  const html = qs.map((q,idx)=>{
+    const letters = ["A","B","C","D"];
+    const optionsHtml = q.options.map((o,i)=>{
+      let cls = "option";
+      if(userAnswers[q.id]===i){
+        if(answersRevealed[q.id]){
+          cls += i===q.ans?" correct":" wrong";
+        } else {
+          cls += " selected";
+        }
+      }
+      if(answersRevealed[q.id] && i===q.ans) cls += " correct";
+      return `<div class="${cls}" onclick="selectOption(${q.id},${i})">
+        <span class="letter">${letters[i]}</span><span>${o}</span>
+      </div>`;
+    }).join("");
+
+    const answerSection = currentMode==="study"
+      ? `<div class="study-answer"><h4>Answer: ${letters[q.ans]}. ${q.options[q.ans]}</h4><p>${q.explanation}</p></div>`
+      : `<div class="answer-section ${answersRevealed[q.id]?'show':''}"><h4>Correct Answer: ${letters[q.ans]}. ${q.options[q.ans]}</h4><p>${q.explanation}</p></div>`;
+
+    return `<div class="q-card">
+      <div class="q-header">
+        <span class="q-num">Q${idx+1} of ${qs.length}</span>
+        <span class="q-prob ${q.prob}">${q.prob} probability</span>
+      </div>
+      <div class="q-topic">${q.cat} &bull; ${q.topic}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">${optionsHtml}</div>
+      ${answerSection}
+    </div>`;
+  }).join("");
+
+  document.getElementById("questionsList").innerHTML = html || '<div style="text-align:center;padding:40px;color:var(--text-dim)">No questions match your filters.</div>';
+  document.getElementById("quizControls").style.display = currentMode==="quiz"?"flex":"none";
+}
+
+function selectOption(qid,idx){
+  if(currentMode==="study") return;
+  if(answersRevealed[qid]) return;
+  userAnswers[qid] = idx;
+  renderQuestions();
+}
+
+function showAllAnswers(){
+  const qs = getFiltered();
+  qs.forEach(q=>{answersRevealed[q.id]=true});
+  renderQuestions();
+}
+
+function calculateScore(){
+  const qs = getFiltered();
+  let correct=0, wrong=0, unanswered=0;
+  qs.forEach(q=>{
+    answersRevealed[q.id]=true;
+    if(userAnswers[q.id]===undefined) unanswered++;
+    else if(userAnswers[q.id]===q.ans) correct++;
+    else wrong++;
+  });
+  const marks = (correct*2)-(wrong*0.66);
+  document.getElementById("finalScore").textContent = `${correct}/${qs.length}`;
+  document.getElementById("scoreMsg").textContent =
+    `Correct: ${correct} (+${correct*2}) | Wrong: ${wrong} (-${(wrong*0.66).toFixed(2)}) | Unanswered: ${unanswered} | Net Marks: ${marks.toFixed(2)}/${qs.length*2}`;
+  document.getElementById("scorePanel").style.display = "block";
+  document.getElementById("scoreDisplay").textContent = correct+"/"+qs.length;
+  renderQuestions();
+}
+
+function resetQuiz(){
+  userAnswers = {};
+  answersRevealed = {};
+  document.getElementById("scorePanel").style.display = "none";
+  document.getElementById("scoreDisplay").textContent = "--";
+  renderQuestions();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+init();
+</script>
+</body>
+</html>
