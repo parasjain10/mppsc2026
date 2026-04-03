@@ -1079,22 +1079,24 @@ function renderQuestions(){
     const letters = ["A","B","C","D"];
     const optionsHtml = q.options.map((o,i)=>{
       let cls = "option";
+      const revealed = answersRevealed[q.id];
       if(userAnswers[q.id]===i){
-        if(answersRevealed[q.id]){
+        if(revealed){
           cls += i===q.ans?" correct":" wrong";
         } else {
           cls += " selected";
         }
       }
-      if(answersRevealed[q.id] && i===q.ans) cls += " correct";
+      if(revealed && i===q.ans && userAnswers[q.id]!==i) cls += " correct";
       return `<div class="${cls}" onclick="selectOption(${q.id},${i})">
         <span class="letter">${letters[i]}</span><span>${o}</span>
       </div>`;
     }).join("");
 
+    const isRevealed = answersRevealed[q.id];
     const answerSection = currentMode==="study"
-      ? `<div class="study-answer"><h4>Answer: ${letters[q.ans]}. ${q.options[q.ans]}</h4><p>${q.explanation}</p></div>`
-      : `<div class="answer-section ${answersRevealed[q.id]?'show':''}"><h4>Correct Answer: ${letters[q.ans]}. ${q.options[q.ans]}</h4><p>${q.explanation}</p></div>`;
+      ? `<div class="study-answer" style="display:${isRevealed?'block':'none'}"><h4>Answer: ${letters[q.ans]}. ${q.options[q.ans]}</h4><p>${q.explanation}</p></div>`
+      : `<div class="answer-section ${isRevealed?'show':''}"><h4>Correct Answer: ${letters[q.ans]}. ${q.options[q.ans]}</h4><p>${q.explanation}</p></div>`;
 
     return `<div class="q-card">
       <div class="q-header">
@@ -1113,9 +1115,9 @@ function renderQuestions(){
 }
 
 function selectOption(qid,idx){
-  if(currentMode==="study") return;
   if(answersRevealed[qid]) return;
   userAnswers[qid] = idx;
+  answersRevealed[qid] = true;
   renderQuestions();
 }
 
