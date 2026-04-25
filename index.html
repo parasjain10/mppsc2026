@@ -169,14 +169,85 @@ header p{color:var(--text-muted);margin-top:6px;font-size:1rem}
   .search-kbd{display:none}
 }
 
+/* ===== MOCK EXAM STYLES ===== */
+.mock-launch-btn{padding:12px 24px;background:linear-gradient(135deg,#dc2626,#ea580c);color:#fff;border:none;border-radius:30px;font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:.03em;box-shadow:0 4px 14px rgba(220,38,38,.4);transition:.2s}
+.mock-launch-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(220,38,38,.5)}
+.mock-overlay{position:fixed;inset:0;background:rgba(8,12,28,.97);z-index:1000;display:none;overflow-y:auto;padding:0}
+.mock-overlay.show{display:block}
+.mock-header{position:sticky;top:0;background:#0f172a;border-bottom:2px solid #1e293b;padding:14px 24px;z-index:10;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.mock-title{font-size:1.05rem;font-weight:700;color:#f1f5f9}
+.mock-title .sub{font-size:.78rem;color:#94a3b8;font-weight:400;display:block;margin-top:2px}
+.mock-timer{font-size:1.4rem;font-weight:800;color:#22c55e;font-variant-numeric:tabular-nums;padding:6px 16px;background:rgba(34,197,94,.1);border-radius:8px;border:1px solid rgba(34,197,94,.3)}
+.mock-timer.warn{color:#f59e0b;background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3)}
+.mock-timer.danger{color:#ef4444;background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3)}
+.mock-progress{font-size:.85rem;color:#cbd5e1}
+.mock-progress strong{color:#fff;font-size:1rem}
+.mock-actions{display:flex;gap:10px}
+.mock-btn{padding:8px 16px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#f1f5f9;cursor:pointer;font-size:.85rem;font-weight:600;transition:.15s}
+.mock-btn:hover{background:#334155;border-color:#475569}
+.mock-btn.danger{background:#7f1d1d;border-color:#991b1b}
+.mock-btn.danger:hover{background:#991b1b}
+.mock-btn.primary{background:#16a34a;border-color:#16a34a}
+.mock-btn.primary:hover{background:#15803d}
+.mock-body{max-width:900px;margin:0 auto;padding:24px}
+.mock-q-num{font-size:.78rem;color:#94a3b8;letter-spacing:.05em;font-weight:600;text-transform:uppercase}
+.mock-q-tier{display:inline-block;font-size:.7rem;padding:2px 8px;border-radius:6px;margin-left:8px;font-weight:700;letter-spacing:.03em}
+.mock-q-tier.t1{background:#7f1d1d;color:#fecaca}
+.mock-q-tier.t2{background:#7c2d12;color:#fed7aa}
+.mock-q-tier.t3{background:#713f12;color:#fde68a}
+.mock-q-text{font-size:1.15rem;color:#f1f5f9;line-height:1.6;margin:14px 0 22px;font-weight:500}
+.mock-options{display:flex;flex-direction:column;gap:10px}
+.mock-opt{padding:14px 18px;background:#1e293b;border:2px solid #334155;border-radius:10px;color:#e2e8f0;cursor:pointer;font-size:.95rem;line-height:1.5;transition:.15s;text-align:left;font-family:inherit;display:flex;align-items:flex-start;gap:12px}
+.mock-opt:hover{background:#334155;border-color:#475569}
+.mock-opt.selected{background:#1e3a8a;border-color:#3b82f6;color:#fff}
+.mock-opt .opt-letter{flex:0 0 28px;height:28px;border-radius:50%;background:#334155;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;color:#cbd5e1}
+.mock-opt.selected .opt-letter{background:#3b82f6;color:#fff}
+.mock-nav{display:flex;justify-content:space-between;gap:12px;margin-top:30px;padding-top:24px;border-top:1px solid #1e293b}
+.mock-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;max-width:600px;margin:24px auto;padding:18px;background:#0f172a;border:1px solid #1e293b;border-radius:12px}
+.mock-grid-cell{aspect-ratio:1;border-radius:6px;border:1px solid #334155;background:#1e293b;color:#94a3b8;cursor:pointer;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:.15s}
+.mock-grid-cell.attempted{background:#15803d;border-color:#16a34a;color:#fff}
+.mock-grid-cell.review{background:#a16207;border-color:#ca8a04;color:#fff}
+.mock-grid-cell.current{outline:3px solid #3b82f6;outline-offset:2px}
+.mock-result{max-width:900px;margin:0 auto;padding:24px}
+.mock-score-card{background:linear-gradient(135deg,#1e3a8a,#1e40af);border-radius:18px;padding:28px;text-align:center;margin-bottom:24px}
+.mock-score-card .big{font-size:3.5rem;font-weight:900;color:#fff;line-height:1;margin:8px 0}
+.mock-score-card .lbl{color:#bfdbfe;font-size:.85rem;text-transform:uppercase;letter-spacing:.1em}
+.mock-score-card.pass{background:linear-gradient(135deg,#15803d,#166534)}
+.mock-score-card.fail{background:linear-gradient(135deg,#991b1b,#7f1d1d)}
+.mock-stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px}
+.mock-stat{background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:14px;text-align:center}
+.mock-stat .v{font-size:1.5rem;font-weight:800;color:#f1f5f9}
+.mock-stat .l{font-size:.72rem;color:#94a3b8;text-transform:uppercase;margin-top:4px;letter-spacing:.05em}
+.mock-stat.correct .v{color:#22c55e}
+.mock-stat.wrong .v{color:#ef4444}
+.mock-stat.skip .v{color:#94a3b8}
+.mock-review-card{background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:18px;margin-bottom:14px}
+.mock-review-card.correct{border-left:4px solid #22c55e}
+.mock-review-card.wrong{border-left:4px solid #ef4444}
+.mock-review-card.skip{border-left:4px solid #94a3b8}
+.mock-review-card .rq{color:#f1f5f9;font-weight:600;margin:6px 0 10px;line-height:1.5}
+.mock-review-card .ropt{display:block;padding:8px 12px;border-radius:6px;margin:4px 0;font-size:.9rem;color:#e2e8f0}
+.mock-review-card .ropt.right{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.4);color:#86efac}
+.mock-review-card .ropt.user-wrong{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4);color:#fca5a5}
+.mock-review-card .rexp{margin-top:10px;padding:10px;background:rgba(59,130,246,.08);border-left:3px solid #3b82f6;font-size:.88rem;color:#cbd5e1;line-height:1.5;border-radius:4px}
+.mock-review-card .rmeta{display:flex;gap:8px;flex-wrap:wrap;font-size:.7rem;color:#64748b;margin-top:8px}
+.mock-review-card .rmeta span{padding:2px 8px;background:#1e293b;border-radius:4px}
+@media(max-width:640px){
+  .mock-grid{grid-template-columns:repeat(5,1fr)}
+  .mock-q-text{font-size:1rem}
+  .mock-header{padding:10px 14px}
+  .mock-timer{font-size:1.1rem;padding:4px 10px}
+  .mock-body{padding:14px}
+}
 </style>
 </head>
 <body>
 <header>
   <h1>MPPSC 2026 Smart Question Bank</h1>
   <p>AI-Curated High-Probability Questions for Prelims (Paper I - General Studies)</p>
-  <div class="exam-badge">Exam Date: 26 April 2026 &bull; 100 Questions &bull; 200 Marks</div>
+  <div class="exam-badge">Exam Date: 26 April 2026 &bull; 100 Questions &bull; 300 Marks &bull; +3/&minus;1 Marking</div>
   <p style="color:var(--text-dim);margin-top:8px;font-size:.78rem">Data sourced from mp.gov.in, invest.mp.gov.in, MP Economic Survey 2025-26, MP Budget 2026-27 &bull; Updated April 2026</p>
+  <div style="margin-top:14px"><button onclick="openMockExam()" class="mock-launch-btn">&#128221; Take MPPSC 2026 Mock Test (100 Q &middot; 2 hr)</button></div>
 </header>
 
 <div class="stats-bar">
@@ -656,8 +727,399 @@ document.addEventListener("keydown", function(e){
   }
 });
 
+
+const mockExam = [
+{id:1,topic:"Vedic Society",scope:"India",tier:1,q:"The doctrine of \"Dvija\" (twice-born) is most directly associated with which of the following?",options:["Rigvedic society","Later Vedic society","Indus Valley Civilization","Sangam society"],ans:1,exp:"The four-fold varna system with Upanayana (sacred-thread ceremony) crystallized in the Later Vedic period."},
+{id:2,topic:"Indus Valley",scope:"India",tier:1,q:"Lothal, an Indus Valley site noted for its dockyard, is located in present-day:",options:["Sindh","Gujarat","Rajasthan","Haryana"],ans:1,exp:"Lothal lies on the Bhogavo river (Sabarmati tributary) in Bhal region of Gujarat — the only IVC site with a confirmed artificial dockyard."},
+{id:3,topic:"Buddhism",scope:"India",tier:1,q:"Which Buddhist text is considered the earliest collection of the Buddha's discourses?",options:["Vinaya Pitaka","Sutta Pitaka","Abhidhamma Pitaka","Dhammapada"],ans:1,exp:"Sutta Pitaka contains the Buddha's discourses; Vinaya Pitaka — monastic rules; Abhidhamma Pitaka — philosophical analyses."},
+{id:4,topic:"Mauryan Empire",scope:"India",tier:1,q:"The Ashokan inscriptions were primarily written in which script?",options:["Sanskrit","Pali","Brahmi","Kharosthi"],ans:2,exp:"Most Ashokan edicts are in Brahmi (Prakrit). North-western edicts use Kharosthi; Aramaic and Greek versions exist in Afghanistan."},
+{id:5,topic:"Gupta Empire",scope:"India",tier:2,q:"The Allahabad Pillar inscription, recording the conquests of a Gupta ruler, was composed by:",options:["Kalidasa","Harisena","Banabhatta","Vishakhadatta"],ans:1,exp:"Harisena, court poet of Samudragupta, composed the Prayaga Prashasti describing the digvijaya campaigns."},
+{id:6,topic:"Modern India",scope:"India",tier:1,q:"The \"Doctrine of Lapse\" was most famously implemented by which Governor-General?",options:["Lord Dalhousie","Lord Wellesley","Lord Curzon","Lord Hastings"],ans:0,exp:"Dalhousie (1848-56) annexed Satara, Jhansi, Nagpur, Sambalpur — a major cause of the 1857 Revolt."},
+{id:7,topic:"1857 Revolt",scope:"MP/India",tier:1,q:"During the 1857 Revolt, Tatya Tope was finally captured and executed near which place in present-day Madhya Pradesh?",options:["Indore","Shivpuri","Gwalior","Sagar"],ans:1,exp:"Tatya Tope was captured near Paron forests (Shivpuri) in April 1859 and executed at Shivpuri."},
+{id:8,topic:"Freedom Movement",scope:"India",tier:1,q:"The \"Quit India Resolution\" was passed by the INC at its session in:",options:["Lahore","Calcutta","Wardha","Bombay"],ans:3,exp:"AICC adopted the Quit India Resolution at the Bombay session on 8 August 1942 (Gowalia Tank Maidan)."},
+{id:9,topic:"MP Architecture",scope:"MP",tier:1,q:"The famous Khajuraho group of temples, a UNESCO World Heritage site, was built primarily by which dynasty?",options:["Paramara","Chandela","Kalachuri","Bundela"],ans:1,exp:"Built by Chandela rulers between 950-1050 CE; Kandariya Mahadev (Vidyadhara) is the largest."},
+{id:10,topic:"MP Architecture",scope:"MP",tier:1,q:"The Sanchi Stupa, containing the relics of Buddha's chief disciples, was originally commissioned by:",options:["Ashoka","Pushyamitra Shunga","Kanishka","Harshvardhana"],ans:0,exp:"Ashoka built the original brick stupa (3rd c. BCE); Shungas added stone casing; Satavahanas added the toranas."},
+{id:11,topic:"MP Medieval Architecture",scope:"MP",tier:1,q:"\"Roopmati Mahal\" and \"Jahaz Mahal\" are architectural landmarks located in:",options:["Mandu","Orchha","Burhanpur","Chanderi"],ans:0,exp:"Both monuments are in Mandu (Dhar district), capital of the Malwa Sultanate."},
+{id:12,topic:"MP Prehistoric",scope:"MP",tier:1,q:"Bhimbetka, famous for prehistoric rock paintings, is located in which district of Madhya Pradesh?",options:["Sehore","Raisen","Narmadapuram","Vidisha"],ans:1,exp:"Bhimbetka rock shelters lie in Raisen district (~45 km SE of Bhopal). UNESCO site, occupied since the Palaeolithic."},
+{id:13,topic:"MP Tribal Revolts",scope:"MP",tier:1,q:"Tantya Bhil, popularly remembered as the \"Indian Robin Hood\", led a tribal revolt primarily in the region of:",options:["Mahakoshal","Nimar-Khargone","Bundelkhand","Baghelkhand"],ans:1,exp:"Tantya Bhil (1842-1889) led raids against the British in Nimar (Khargone, Khandwa, Barwani). MP's Patalpani station is named after him."},
+{id:14,topic:"MP Medieval History",scope:"MP",tier:1,q:"Raja Bhoj, a celebrated 11th-century scholar-king of the Paramara dynasty, ruled from his capital at:",options:["Vidisha","Dhar","Mandu","Ujjain"],ans:1,exp:"Bhoj (r. c. 1010-1055 CE) ruled from Dhar; works include Samarangana Sutradhara, Bhojeshwar Temple and Bhojpur tank."},
+{id:15,topic:"MP Folk Dance",scope:"MP",tier:1,q:"\"Matki\" is a traditional folk dance of which region of Madhya Pradesh?",options:["Bundelkhand","Bagelkhand","Malwa","Mahakoshal"],ans:2,exp:"Matki dance, performed by women balancing earthen pots, is associated with Malwa. Bundelkhand has Rai; Mahakoshal has Karma."},
+{id:16,topic:"MP Tribal Art",scope:"MP",tier:2,q:"\"Pithora\" painting, a tribal mural tradition, is associated primarily with which community of Madhya Pradesh?",options:["Gond","Bhil/Rathwa","Sahariya","Korku"],ans:1,exp:"Pithora is a ritual mural tradition of the Bhil-Rathwa community of western MP/Gujarat border districts."},
+{id:17,topic:"Constitution - Preamble",scope:"India",tier:1,q:"The words \"Socialist\" and \"Secular\" were inserted into the Preamble by which amendment?",options:["24th Amendment","42nd Amendment","44th Amendment","86th Amendment"],ans:1,exp:"42nd Amendment (1976) — the \"mini-Constitution\" — added Socialist, Secular, and Integrity to the Preamble."},
+{id:18,topic:"Fundamental Rights",scope:"India",tier:1,q:"Right to Privacy was declared a Fundamental Right under Article 21 by the Supreme Court in which 2017 judgment?",options:["S.R. Bommai vs UoI","Justice K.S. Puttaswamy vs UoI","Maneka Gandhi vs UoI","Indra Sawhney vs UoI"],ans:1,exp:"A nine-judge bench in Puttaswamy (2017) unanimously held Right to Privacy intrinsic to Article 21."},
+{id:19,topic:"DPSP",scope:"India",tier:1,q:"Article 40 of the Indian Constitution directs the State to:",options:["Promote cottage industries","Organise village panchayats","Provide free legal aid","Promote international peace"],ans:1,exp:"Article 40 (DPSP) directs the State to organise village panchayats — operationalised by the 73rd Amendment."},
+{id:20,topic:"Fundamental Duties",scope:"India",tier:1,q:"How many Fundamental Duties are currently enshrined in the Constitution?",options:["9","10","11","12"],ans:2,exp:"Originally 10 (42nd Amendment, 1976); the 11th — duty to provide education for children 6-14 — added by 86th Amendment (2002)."},
+{id:21,topic:"President",scope:"India",tier:1,q:"The President of India is elected by an Electoral College that includes:",options:["Members of Parliament only","Elected MPs + elected MLAs of all States and UTs of Delhi, Puducherry & J&K","Members of all Legislative Assemblies and Councils","Members of Lok Sabha and Rajya Sabha and Vidhan Sabha + Vidhan Parishad"],ans:1,exp:"Article 54: Elected MPs of both Houses + elected MLAs of all States + elected members of NCT Delhi, Puducherry & J&K. Nominated members and MLCs excluded."},
+{id:22,topic:"State Executive",scope:"India",tier:2,q:"Under which Article is the Governor of a State appointed?",options:["Article 153","Article 155","Article 156","Article 157"],ans:1,exp:"Article 153 — mandate; Article 155 — appointed by President; Article 156 — term; Article 157 — qualifications."},
+{id:23,topic:"Local Government",scope:"India",tier:1,q:"The 73rd Constitutional Amendment Act introduced which Schedule listing 29 subjects for Panchayats?",options:["9th Schedule","10th Schedule","11th Schedule","12th Schedule"],ans:2,exp:"11th Schedule (added by 73rd Amendment, 1992) lists 29 subjects for Panchayats. 12th Schedule lists 18 subjects for Municipalities."},
+{id:24,topic:"Governance Laws",scope:"India",tier:2,q:"The Right to Information Act, 2005 came into force on:",options:["12 October 2005","1 April 2005","15 August 2005","26 January 2006"],ans:0,exp:"RTI Act received presidential assent on 15 June 2005 and came into full force on 12 October 2005."},
+{id:25,topic:"Constitutional Bodies",scope:"India",tier:1,q:"The Comptroller and Auditor General of India is appointed under which Article?",options:["Article 76","Article 148","Article 280","Article 324"],ans:1,exp:"Article 148 — CAG. Art 76 = AG; Art 280 = Finance Commission; Art 324 = Election Commission."},
+{id:26,topic:"Judiciary",scope:"India",tier:3,q:"Original jurisdiction of the Supreme Court in disputes between the Centre and States is provided under:",options:["Article 131","Article 132","Article 136","Article 143"],ans:0,exp:"Article 131 — original jurisdiction in Centre-State or inter-State disputes; 132 — appellate; 136 — SLP; 143 — advisory."},
+{id:27,topic:"Election Commission",scope:"India",tier:2,q:"The Election Commission of India became a multi-member body permanently in which year?",options:["1989","1993","1991","2000"],ans:1,exp:"ECI became permanently three-member from 1 October 1993 (one CEC + two ECs)."},
+{id:28,topic:"MP Formation",scope:"MP",tier:1,q:"The state of Madhya Pradesh in its present form was created on:",options:["26 January 1950","1 November 1956","1 November 2000","26 January 1950 (renamed in 1956)"],ans:1,exp:"MP reorganised on 1 Nov 1956 under the States Reorganisation Act, merging Madhya Bharat, Vindhya Pradesh, Bhopal State and parts of CP & Berar."},
+{id:29,topic:"MP CMs",scope:"MP",tier:1,q:"The first Chief Minister of Madhya Pradesh after its 1956 reorganisation was:",options:["Kailash Nath Katju","Pt. Ravishankar Shukla","Bhagwantrao Mandloi","Dwarka Prasad Mishra"],ans:1,exp:"Pt. Ravishankar Shukla took oath as the first CM on 1 Nov 1956; he died in office on 31 December 1956."},
+{id:30,topic:"MP Assembly",scope:"MP",tier:1,q:"The Madhya Pradesh Legislative Assembly currently consists of how many seats?",options:["200 elected + 1 nominated","230 elected + 1 nominated (Anglo-Indian — currently lapsed)","250 elected","232 elected"],ans:1,exp:"MP Vidhan Sabha has 230 elected seats. The Anglo-Indian nominated seat (Article 333) lapsed after the 104th Amendment (2020)."},
+{id:31,topic:"MP Reorganisation",scope:"MP",tier:1,q:"Chhattisgarh was carved out of Madhya Pradesh on:",options:["1 November 1956","9 November 2000","1 November 2000","15 November 2000"],ans:2,exp:"Chhattisgarh was created as the 26th state on 1 Nov 2000 (Uttarakhand 9 Nov; Jharkhand 15 Nov)."},
+{id:32,topic:"Indian Geography",scope:"India",tier:1,q:"The Tropic of Cancer passes through how many Indian states?",options:["6","7","8","9"],ans:2,exp:"Eight states: Gujarat, Rajasthan, MP, Chhattisgarh, Jharkhand, West Bengal, Tripura, Mizoram."},
+{id:33,topic:"Physiography",scope:"India",tier:2,q:"The highest peak entirely within Indian territory (undisputed) is:",options:["K2 (Godwin Austen)","Kangchenjunga","Nanda Devi","Saltoro Kangri"],ans:2,exp:"K2 lies in PoK; Kangchenjunga is on Sikkim-Nepal border. Nanda Devi (7,816 m, Uttarakhand) is the highest peak entirely within India."},
+{id:34,topic:"Drainage",scope:"India",tier:2,q:"The \"Sundarbans\" delta is formed by which river system?",options:["Mahanadi-Brahmani","Ganga-Brahmaputra-Meghna","Krishna-Godavari","Cauvery"],ans:1,exp:"Sundarbans (UNESCO) is formed by the combined delta of Ganga, Brahmaputra and Meghna — home of the Royal Bengal Tiger."},
+{id:35,topic:"Climatology",scope:"India",tier:1,q:"The Indian summer (south-west) monsoon arrives first on:",options:["Andaman & Nicobar Islands","Kerala coast","Lakshadweep","Tamil Nadu coast"],ans:0,exp:"SW monsoon hits Andaman & Nicobar Islands by ~20 May before reaching Kerala (\"official onset\" ~1 June)."},
+{id:36,topic:"Soils",scope:"India/MP",tier:1,q:"Black soil (Regur), highly suited for cotton, is mostly derived from:",options:["Granite weathering","Lava (basalt) weathering of the Deccan Traps","Alluvial deposits","Glacial action"],ans:1,exp:"Regur soil of the Deccan Plateau (covering MP, Maharashtra, parts of Gujarat) is formed by in-situ weathering of basaltic lava — high moisture-retention → cotton."},
+{id:37,topic:"Rivers",scope:"India",tier:1,q:"The Brahmaputra is known as which river in Tibet?",options:["Yarlung Tsangpo","Sutlej","Karnali","Saraswati"],ans:0,exp:"Brahmaputra rises near Kailash-Mansarovar as Yarlung Tsangpo, becomes Siang in Arunachal, then Brahmaputra in Assam."},
+{id:38,topic:"Biodiversity",scope:"India",tier:2,q:"The Western Ghats is recognised as a UNESCO World Heritage Site primarily for:",options:["Geological antiquity","Biodiversity (one of the world's eight \"hottest hotspots\")","Cultural heritage","Mineral resources"],ans:1,exp:"Western Ghats is a UNESCO Natural World Heritage Site (2012); 39 component sites; one of Earth's eight biodiversity hotspots."},
+{id:39,topic:"Indian Geography",scope:"India",tier:1,q:"The Indian Standard Time is calculated based on the longitude:",options:["75° E (passing through Mumbai)","80° E","82.5° E (passing through Mirzapur)","85° E"],ans:2,exp:"IST is based on 82°30′ E (passing through Shankargarh near Mirzapur, UP). 5 hr 30 min ahead of UTC."},
+{id:40,topic:"Vegetation",scope:"India",tier:2,q:"Which is the largest mangrove forest in India by area?",options:["Pichavaram","Sundarbans","Bhitarkanika","Mahanadi delta"],ans:1,exp:"Sundarbans (West Bengal) is the largest mangrove cover in India and the world's largest single tract of mangrove forest."},
+{id:41,topic:"MP Rivers",scope:"MP",tier:1,q:"The Narmada river originates at Amarkantak, located in which district of Madhya Pradesh?",options:["Anuppur","Shahdol","Mandla","Dindori"],ans:0,exp:"Amarkantak (source of Narmada and Son) lies in Anuppur district. The Maikal range separates Narmada and Son drainage."},
+{id:42,topic:"MP Rivers",scope:"MP",tier:1,q:"The Tapti (Tapi) river originates from:",options:["Multai (Betul district), MP","Amarkantak (Anuppur), MP","Mhow (Indore), MP","Pachmarhi (Narmadapuram), MP"],ans:0,exp:"Tapti rises in Multai (Betul) on the Satpura range and flows westward to the Arabian Sea via Surat."},
+{id:43,topic:"MP Physiography",scope:"MP",tier:1,q:"The highest peak of Madhya Pradesh is:",options:["Sigar","Dhupgarh","Janapav","Amarkantak peak"],ans:1,exp:"Dhupgarh (1,352 m) at Pachmarhi (Narmadapuram) on Satpura range is MP's highest peak."},
+{id:44,topic:"MP National Parks",scope:"MP",tier:1,q:"Which national park of MP was the first to be brought under \"Project Tiger\" in 1973?",options:["Bandhavgarh","Pench","Kanha","Satpura"],ans:2,exp:"Kanha was among the original nine reserves notified under Project Tiger on 1 April 1973."},
+{id:45,topic:"MP Environment",scope:"MP",tier:1,q:"The Pachmarhi Biosphere Reserve covers parts of which districts?",options:["Narmadapuram, Betul and Chhindwara","Mandla, Dindori and Anuppur","Khargone, Khandwa and Burhanpur","Sehore, Raisen and Vidisha"],ans:0,exp:"Pachmarhi Biosphere Reserve (1999, UNESCO MAB 2009) spans Narmadapuram, Betul, and Chhindwara — including Satpura NP, Bori WLS, Pachmarhi WLS."},
+{id:46,topic:"MP Wetlands",scope:"MP",tier:1,q:"Which is the most prominent Ramsar wetland site located within Bhopal city?",options:["Bhoj Wetland (Upper & Lower Lake)","Sakhya Sagar","Yashwant Sagar","Sirpur Lake"],ans:0,exp:"Bhoj Wetland (Upper Lake by Raja Bhoj + Lower Lake) was designated a Ramsar site in 2002."},
+{id:47,topic:"MP Forests",scope:"MP",tier:1,q:"As per ISFR 2023, which state has the largest forest cover by area in India?",options:["Arunachal Pradesh","Madhya Pradesh","Chhattisgarh","Maharashtra"],ans:1,exp:"ISFR 2023 confirms MP has the largest forest cover by area (~77,073 km²); Mizoram has highest % cover. ISFR also flagged a notable decrease in MP's forest cover compared to 2021."},
+{id:48,topic:"RBI",scope:"India",tier:2,q:"Which committee restructured India's monetary policy framework, leading to the formation of the Monetary Policy Committee (MPC)?",options:["Rangarajan Committee","Bimal Jalan Committee","Urjit Patel Committee","Tarapore Committee"],ans:2,exp:"Urjit Patel Committee (2014) recommended flexible inflation targeting; MPC established 2016 with 4% (±2%) CPI target."},
+{id:49,topic:"Taxation",scope:"India",tier:1,q:"Goods and Services Tax (GST) came into effect in India on:",options:["1 April 2017","1 July 2017","1 July 2016","1 April 2018"],ans:1,exp:"GST rolled out at midnight 30 June / 1 July 2017 under the 101st Constitutional Amendment Act, 2016."},
+{id:50,topic:"Economic Institutions",scope:"India",tier:1,q:"NITI Aayog replaced which institution?",options:["Finance Commission","Planning Commission","Inter-State Council","Department of Economic Affairs"],ans:1,exp:"NITI Aayog was set up on 1 January 2015 by an executive resolution, replacing the Planning Commission (1950). It is NOT a constitutional body."},
+{id:51,topic:"Financial Inclusion",scope:"India",tier:2,q:"The Pradhan Mantri Jan Dhan Yojana (PMJDY) was launched in:",options:["August 2014","August 2015","October 2014","August 2016"],ans:0,exp:"PMJDY launched on 28 August 2014 for universal banking and financial inclusion."},
+{id:52,topic:"Inflation Indices",scope:"India",tier:2,q:"The Wholesale Price Index (WPI) is published by which body in India?",options:["Reserve Bank of India","Office of the Economic Adviser, DPIIT","National Statistical Office","Ministry of Finance"],ans:1,exp:"WPI is released by Office of the Economic Adviser, DPIIT. CPI is released by NSO under MoSPI."},
+{id:53,topic:"MSME Schemes",scope:"India",tier:2,q:"The \"Pradhan Mantri Mudra Yojana\" (PMMY) provides loans up to:",options:["₹5 lakh under three categories","₹10 lakh under three categories (Shishu/Kishore/Tarun)","₹20 lakh under four categories","₹50 lakh under five categories"],ans:1,exp:"PMMY (2015) — three categories: Shishu (≤₹50k), Kishore (₹50k-₹5L), Tarun (₹5-10L). Tarun Plus extended to ₹20L in Budget 2024."},
+{id:54,topic:"Digital Economy",scope:"India",tier:1,q:"UPI (Unified Payments Interface) is operated by:",options:["Reserve Bank of India","National Payments Corporation of India (NPCI)","State Bank of India","Ministry of Electronics & IT"],ans:1,exp:"UPI is built and operated by NPCI; launched in April 2016. Now dominates retail digital payments in India."},
+{id:55,topic:"MP Budget",scope:"MP",tier:1,q:"The Madhya Pradesh Budget 2025-26 introduced which novel concept that was a first for any Indian state?",options:["Zero-base budgeting","Outcome budgeting","Rolling budget","Gender budgeting"],ans:2,exp:"MP Government introduced a \"Rolling Budget\" framework — a first-of-its-kind initiative in India aligning medium-term planning with annual outlays."},
+{id:56,topic:"MP Economy",scope:"MP",tier:1,q:"As per MP Economic Survey 2025-26, MP's nominal GSDP growth for 2024-25 was estimated at approximately:",options:["~7%","~9%","~11%","~14%"],ans:2,exp:"MP Economic Survey 2025-26 reported nominal GSDP growth of ~11% (real growth ~8%)."},
+{id:57,topic:"MP Economy",scope:"MP",tier:1,q:"As per MP Economic Survey 2025-26, the per-capita income of MP in 2024-25 (current prices) is:",options:["Lower than the all-India average","Equal to the all-India average","Higher than the all-India average","Highest among Hindi-belt states"],ans:0,exp:"MP's per capita NSDP (~₹1.55-1.70 lakh range) remains below the all-India average (~₹2 lakh)."},
+{id:58,topic:"MP Economic Structure",scope:"MP",tier:1,q:"Which sector contributes the largest share to MP's GSDP?",options:["Primary (Agriculture & allied)","Secondary (Industry & Manufacturing)","Tertiary (Services)","Mining alone"],ans:2,exp:"Services sector contributes the largest share (~40-45%) to MP's GSDP. Agriculture (~38-40%) has higher employment share than its GVA share."},
+{id:59,topic:"MP Investment",scope:"MP",tier:2,q:"The Global Investors Summit (GIS) \"Invest MP - 2025\" was held in which city?",options:["Indore","Bhopal","Gwalior","Jabalpur"],ans:1,exp:"The 8th GIS was hosted at Bhopal in February 2025; previous editions were held at Indore."},
+{id:60,topic:"MP Minerals",scope:"MP",tier:1,q:"Madhya Pradesh is the largest producer in India of which mineral?",options:["Coal","Iron ore","Diamond","Manganese"],ans:2,exp:"MP is the only state in India producing diamonds commercially (Panna). Also largest producer of slate, pyrophyllite, and diaspore."},
+{id:61,topic:"MP GI Tags",scope:"MP",tier:1,q:"Panna diamonds were granted Geographical Indication (GI) tag in which year?",options:["2022","2023","2024","2025"],ans:2,exp:"Panna diamonds received the GI tag in 2024, joining MP's other notable GI items (Chanderi, Maheshwari sarees, Bagh print, Ratlami sev)."},
+{id:62,topic:"MP Religious Tourism",scope:"MP",tier:1,q:"The Simhastha Kumbh of Ujjain is scheduled for which year, with major budgetary allocations announced in MP's recent budgets?",options:["2027","2028","2029","2030"],ans:1,exp:"Next Simhastha at Ujjain is in 2028. MP Budget 2025-26 made significant allocations for Simhastha-related infrastructure and Mahakal Lok Phase-II."},
+{id:63,topic:"MP Welfare Schemes",scope:"MP",tier:1,q:"The \"Mukhyamantri Ladli Behna Yojana\" provides eligible women a monthly financial assistance currently of:",options:["₹1,000","₹1,250","₹1,500","₹2,000"],ans:1,exp:"Launched in 2023 at ₹1,000/month; raised to ₹1,250/month. Eligibility: married women aged 21-60."},
+{id:64,topic:"MP Welfare Schemes",scope:"MP",tier:1,q:"\"Mukhyamantri Jan Kalyan (Sambal) Yojana\" of MP primarily targets:",options:["Senior citizens","Unorganised workers","Differently-abled persons","Marginal farmers"],ans:1,exp:"Sambal Yojana (relaunched as Sambal 2.0 in 2020) provides social-security benefits — maternity, accident insurance, scholarship, electricity bill relief — to unorganised sector workers."},
+{id:65,topic:"MP Schemes",scope:"MP",tier:1,q:"The \"Ladli Lakshmi Yojana\" of MP, designed to improve the child sex ratio, was launched in which year?",options:["2005","2006","2007","2010"],ans:2,exp:"Launched on 1 April 2007 by then-CM Shivraj Singh Chouhan. Provides ₹2 lakh corpus matured assistance for each girl child meeting eligibility (DOB after 1 Jan 2006)."},
+{id:66,topic:"MP e-Governance",scope:"MP",tier:3,q:"Which of the following is a digital governance flagship of Madhya Pradesh?",options:["Cyber Tahsil","e-Sampark","Jan Sunwai Online","MP eDistrict only"],ans:0,exp:"\"Cyber Tahsil\" was launched in MP to digitise mutation/registration — paperless, online property mutation and e-revenue services without physical Tahsil visits."},
+{id:67,topic:"MP Tribes",scope:"MP",tier:1,q:"The largest tribe of Madhya Pradesh by population is:",options:["Gond","Bhil","Sahariya","Korku"],ans:1,exp:"Per 2011 Census: Bhils are the largest ST group in MP (~37%); Gonds ~35%."},
+{id:68,topic:"MP PVTGs",scope:"MP",tier:1,q:"Which of the following is a PVTG (Particularly Vulnerable Tribal Group) of Madhya Pradesh?",options:["Bhil","Gond","Baiga","Korku"],ans:2,exp:"Three PVTGs in MP: Baiga, Bhariya, and Sahariya."},
+{id:69,topic:"MP Tribal Festival",scope:"MP",tier:2,q:"\"Bhagoria\" is a colourful festival celebrated mainly by which community of MP, just before Holi?",options:["Gond","Bhil-Bhilala","Sahariya","Korku"],ans:1,exp:"Bhagoria is a tribal fair-festival of Bhil-Bhilala community in Jhabua, Alirajpur, Khargone, Dhar — held a week before Holi."},
+{id:70,topic:"Conservation",scope:"MP/India",tier:1,q:"Project Cheetah, India's first inter-continental large-carnivore translocation, brought cheetahs to which national park?",options:["Bandhavgarh","Kanha","Kuno","Madhav"],ans:2,exp:"First batch of 8 cheetahs from Namibia released by PM Modi at Kuno NP, Sheopur (MP) on 17 Sept 2022. First wild-born cubs in India reported from Kuno in 2024."},
+{id:71,topic:"Int'l Environment",scope:"World",tier:2,q:"Which agreement aims at the global phase-out of ozone-depleting substances (ODS)?",options:["Kyoto Protocol","Paris Agreement","Montreal Protocol","Basel Convention"],ans:2,exp:"Montreal Protocol (1987) targets phase-out of CFCs/HCFCs. Kigali Amendment (2016) extends it to HFCs; India ratified 2021."},
+{id:72,topic:"Environment",scope:"World",tier:2,q:"\"Climate change\" as a global problem is dealt with under which UN convention?",options:["UNFCCC","UNCCD","CBD","CITES"],ans:0,exp:"UNFCCC (1992, Rio) is the primary climate convention. CBD = biodiversity; UNCCD = desertification; CITES = wildlife trade."},
+{id:73,topic:"Human Body",scope:"Science",tier:2,q:"Which vitamin is synthesized in human skin on exposure to sunlight?",options:["Vitamin A","Vitamin B12","Vitamin C","Vitamin D"],ans:3,exp:"UV-B sunlight converts 7-dehydrocholesterol in skin to cholecalciferol (Vit D₃) — important for calcium absorption and bone health."},
+{id:74,topic:"Communicable Diseases",scope:"Science",tier:2,q:"Which of the following diseases is NOT caused by a virus?",options:["Influenza","AIDS","Tuberculosis","Dengue"],ans:2,exp:"TB is caused by Mycobacterium tuberculosis (bacterium). Influenza, AIDS (HIV), Dengue are viral."},
+{id:75,topic:"Physics Basics",scope:"Science",tier:1,q:"The unit \"Pascal\" measures:",options:["Force","Pressure","Power","Energy"],ans:1,exp:"1 Pascal = 1 Newton/m². Force = Newton; Power = Watt; Energy = Joule."},
+{id:76,topic:"Biology Basics",scope:"Science",tier:1,q:"\"Photosynthesis\" primarily occurs in which cellular organelle?",options:["Mitochondria","Ribosome","Chloroplast","Golgi apparatus"],ans:2,exp:"Photosynthesis occurs in chloroplasts (containing chlorophyll). Mitochondria → respiration; ribosome → protein synthesis; Golgi → packaging."},
+{id:77,topic:"Space Technology",scope:"India",tier:1,q:"ISRO's first dedicated solar observation mission, launched in 2023, was named:",options:["Chandrayaan-3","Aditya-L1","Astrosat","Mangalyaan-2"],ans:1,exp:"Aditya-L1 launched 2 Sept 2023 by PSLV-C57; inserted into halo orbit around Sun-Earth L1 Lagrange point in Jan 2024."},
+{id:78,topic:"Computer Hardware",scope:"ICT",tier:1,q:"In a computer system, which of the following is volatile memory?",options:["ROM","RAM","Hard disk","SSD"],ans:1,exp:"RAM is volatile (data lost when power off). ROM, HDD, SSD retain data. RAM is \"primary working memory\"."},
+{id:79,topic:"Software",scope:"ICT",tier:2,q:"Which of the following is NOT an operating system?",options:["Linux","Android","Oracle","iOS"],ans:2,exp:"Oracle is a database management system (DBMS), not an OS. Linux, Android, iOS are operating systems."},
+{id:80,topic:"Internet",scope:"ICT",tier:1,q:"\"HTTP\" stands for:",options:["Hyper Text Transfer Protocol","High Transfer Text Protocol","Hyper Transfer Text Procedure","Host Transmission Tracking Protocol"],ans:0,exp:"HTTP is the foundational protocol of the World Wide Web. HTTPS adds TLS/SSL encryption."},
+{id:81,topic:"Cyber Security",scope:"ICT",tier:1,q:"\"Phishing\" is best described as:",options:["Hacking via brute force","Fraudulent communication impersonating trusted entities to steal credentials","Encrypted ransomware attack","Denial-of-service attack"],ans:1,exp:"Phishing uses deceptive emails/SMS/websites posing as banks or govt to steal credentials. Smishing uses SMS; vishing uses voice calls."},
+{id:82,topic:"AI Basics",scope:"ICT",tier:1,q:"The \"Turing Test\" is associated with:",options:["Cryptography","Artificial Intelligence","Hardware design","Computer networking"],ans:1,exp:"Proposed by Alan Turing (1950), the test checks whether a machine's responses are indistinguishable from a human's — foundational to AI evaluation."},
+{id:83,topic:"Cyber Security Bodies",scope:"ICT",tier:2,q:"Which Indian agency issues \"CERT-In\" advisories on cyber-security?",options:["NIC","Ministry of Defence","Indian Computer Emergency Response Team (under MeitY)","NPCI"],ans:2,exp:"CERT-In, under MeitY, is the national nodal agency for cyber-security incidents."},
+{id:84,topic:"Digital India",scope:"ICT/India",tier:1,q:"Aadhaar is issued by:",options:["Ministry of Home Affairs","Unique Identification Authority of India (UIDAI), under MeitY","Election Commission of India","NIC"],ans:1,exp:"UIDAI was set up in 2009; statutory backing by Aadhaar Act, 2016."},
+{id:85,topic:"Cloud Computing",scope:"ICT",tier:2,q:"In cloud computing, the service model where servers, storage and networking are provided over the internet on demand is called:",options:["SaaS","PaaS","IaaS","NaaS"],ans:2,exp:"IaaS (Infrastructure-as-a-Service) — e.g., AWS EC2; PaaS — e.g., Google App Engine; SaaS — e.g., Gmail."},
+{id:86,topic:"LS 2024",scope:"India",tier:1,q:"In the 2024 General (Lok Sabha) Election, the BJP-led NDA won approximately how many seats?",options:["~240","~290","~330","~352"],ans:1,exp:"NDA won around 293 seats (BJP alone ~240). INDIA alliance won ~234. PM Modi sworn in for a third consecutive term."},
+{id:87,topic:"Constitution",scope:"India",tier:1,q:"Article 370 of the Indian Constitution was effectively abrogated on:",options:["5 August 2019","31 October 2019","26 January 2019","15 August 2019"],ans:0,exp:"On 5 Aug 2019 the Centre announced operative provisions of Article 370 inoperative; J&K Reorganisation Act 2019 created two UTs effective 31 Oct 2019. SC upheld in Dec 2023."},
+{id:88,topic:"Constitutional Amendments",scope:"India",tier:1,q:"The \"Nari Shakti Vandan Adhiniyam\" (Constitution 106th Amendment Act, 2023) provides for women's reservation of:",options:["33% in Lok Sabha and State Legislative Assemblies","50% in Lok Sabha and State Legislative Assemblies","33% in Panchayats only","33% in Rajya Sabha"],ans:0,exp:"106th Amendment provides 33% reservation for women in Lok Sabha, State Assemblies, and Delhi Assembly. Implementation post-delimitation following the next Census."},
+{id:89,topic:"ISRO Missions",scope:"India",tier:1,q:"Chandrayaan-3 made India the first country to soft-land near the lunar south pole on:",options:["14 July 2023","23 August 2023","2 September 2023","30 September 2023"],ans:1,exp:"Vikram lander touched down at \"Shiv Shakti Point\" near 69°S on 23 Aug 2023. India became 4th country to soft-land on Moon and 1st near south pole. 23 Aug = National Space Day."},
+{id:90,topic:"G-20 / Diplomacy",scope:"World",tier:1,q:"India hosted the G-20 Summit in September 2023 at New Delhi under the theme:",options:["Vasudhaiva Kutumbakam — One Earth, One Family, One Future","Sabka Saath Sabka Vikas","One Sun, One World, One Grid","Atmanirbhar Bharat"],ans:0,exp:"\"Vasudhaiva Kutumbakam — One Earth, One Family, One Future\" was the theme. The African Union was admitted as a permanent G-20 member at this summit."},
+{id:91,topic:"Sports",scope:"World",tier:1,q:"India's tally of Olympic medals at the Paris 2024 Olympic Games was:",options:["4","6","7","10"],ans:1,exp:"India won 6 medals at Paris 2024: 1 silver (Neeraj Chopra, Javelin) + 5 bronze. Manu Bhaker became first Indian woman to win 2 medals at a single Olympics."},
+{id:92,topic:"Sports",scope:"World",tier:1,q:"At the Paris 2024 Paralympics, India achieved its best-ever performance with:",options:["19 medals","23 medals","29 medals","35 medals"],ans:2,exp:"India won 29 medals at Paris Paralympics 2024 (7 gold, 9 silver, 13 bronze) — best-ever performance."},
+{id:93,topic:"Awards",scope:"World",tier:2,q:"The Nobel Peace Prize 2024 was awarded to:",options:["Maria Ressa","Narges Mohammadi","Nihon Hidankyo (Japan Confederation of A- and H-Bomb Sufferers)","UNHCR"],ans:2,exp:"Nobel Peace Prize 2024 went to Nihon Hidankyo — a movement of Hiroshima/Nagasaki survivors — for work toward a world free of nuclear weapons."},
+{id:94,topic:"Literature Awards",scope:"World",tier:3,q:"Booker Prize 2024 was won by which novelist for the work \"Orbital\"?",options:["Paul Lynch","Samantha Harvey","Damon Galgut","Geetanjali Shree"],ans:1,exp:"Samantha Harvey (UK) won the 2024 Booker Prize for \"Orbital\", a novel set on the International Space Station."},
+{id:95,topic:"Digital Public Infrastructure",scope:"India",tier:1,q:"India's \"Digital Public Infrastructure\" (DPI), showcased globally at G-20 2023, includes which of the following?",options:["Aadhaar, UPI, DigiLocker","JAM trinity / DBT layer","Bhashini, ONDC, IndiaStack","All of the above"],ans:3,exp:"India's DPI stack includes Aadhaar (identity), UPI (payments), DigiLocker (credentials), ONDC (commerce), Bhashini (language) — bundled as IndiaStack."},
+{id:96,topic:"Recent Events",scope:"India",tier:1,q:"The Ram Mandir at Ayodhya was consecrated (Pran Pratishtha) on:",options:["22 January 2024","5 August 2020","14 February 2024","1 January 2024"],ans:0,exp:"Pran Pratishtha of Ram Lalla idol at the new Ram Mandir, Ayodhya, was performed on 22 January 2024 in the presence of PM Modi."},
+{id:97,topic:"MP Infrastructure",scope:"MP",tier:1,q:"Indore Metro's \"Yellow Line\" (Phase-I priority corridor) was inaugurated by Prime Minister Narendra Modi in:",options:["February 2025","May 2025","August 2025","October 2025"],ans:1,exp:"PM Modi inaugurated the Indore Metro Yellow Line priority corridor on 31 May 2025. Indore became the 22nd Indian city to operate metro rail."},
+{id:98,topic:"MP Appointments",scope:"MP",tier:1,q:"Who is the Chief Secretary of Madhya Pradesh appointed in 2024?",options:["Iqbal Singh Bains","Veera Rana","Anurag Jain","Mohammed Suleman"],ans:2,exp:"Anurag Jain (1989-batch IAS) took charge as Chief Secretary of MP in 2024. Mohan Yadav has been CM since December 2023."},
+{id:99,topic:"Project Cheetah",scope:"MP",tier:1,q:"Project Cheetah recorded its first wild-born cubs in India in:",options:["March 2023, at Kuno","March 2024, at Kuno","September 2022, at Kuno","August 2024, at Gandhi Sagar"],ans:1,exp:"Indian-born cheetah cubs were celebrated at Kuno during 2023-24, marking the first cohort of wild-born cubs surviving in modern India. Gandhi Sagar (Mandsaur) is being readied as a second home."},
+{id:100,topic:"Padma Awards 2024 MP",scope:"MP",tier:1,q:"Which of the following Padma Award recipients in 2024 is from Madhya Pradesh?",options:["Kaluram Bamaniya — Padma Shri (Kabir Bhajan tradition)","Sonu Nigam","Amitabh Bachchan","Mithun Chakraborty"],ans:0,exp:"Kaluram Bamaniya, renowned Kabir-Bhajan exponent of Malwa, received Padma Shri 2024 from MP. Satendra Singh Lohia (para-swimmer, MP) also received Padma Shri."}
+];
+
+
+// ===== MOCK EXAM STATE =====
+var mockState = {
+  current: 0,
+  answers: {},
+  marked: {},
+  timeLeft: 120 * 60,
+  timerId: null,
+  submitted: false
+};
+
+function openMockExam(){
+  if(!confirm('Start MPPSC 2026 Mock Test?\n\n' +
+    '• 100 questions, 2 hours\n' +
+    '• Marking: +3 correct, −1 wrong, 0 skipped\n' +
+    '• Total: 300 marks (need ~150-170 to clear)\n\n' +
+    'Click OK to start the timer.')) return;
+  mockState = {
+    current: 0,
+    answers: {},
+    marked: {},
+    timeLeft: 120 * 60,
+    timerId: null,
+    submitted: false
+  };
+  document.getElementById('mockOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  startMockTimer();
+  renderMockQ();
+}
+
+function closeMockExam(){
+  if(!mockState.submitted){
+    if(!confirm('Exit the mock exam?\n\nYour progress will be lost. Click OK to exit anyway.')) return;
+  }
+  if(mockState.timerId) clearInterval(mockState.timerId);
+  document.getElementById('mockOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function startMockTimer(){
+  if(mockState.timerId) clearInterval(mockState.timerId);
+  updateMockTimer();
+  mockState.timerId = setInterval(function(){
+    mockState.timeLeft--;
+    if(mockState.timeLeft <= 0){
+      clearInterval(mockState.timerId);
+      alert('Time up! Submitting your paper now.');
+      submitMock();
+      return;
+    }
+    updateMockTimer();
+  }, 1000);
+}
+
+function updateMockTimer(){
+  var t = mockState.timeLeft;
+  var h = Math.floor(t / 3600);
+  var m = Math.floor((t % 3600) / 60);
+  var s = t % 60;
+  var str = (h > 0 ? h + ':' : '') + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  var el = document.getElementById('mockTimer');
+  if(!el) return;
+  el.textContent = '⏱️ ' + str;
+  el.classList.remove('warn','danger');
+  if(t < 600) el.classList.add('danger');
+  else if(t < 1800) el.classList.add('warn');
+}
+
+function renderMockQ(){
+  var q = mockExam[mockState.current];
+  if(!q) return;
+  var sel = mockState.answers[q.id];
+  var letters = ['A','B','C','D'];
+  var optsHtml = q.options.map(function(opt, i){
+    var isSel = sel === i;
+    return '<button class="mock-opt' + (isSel ? ' selected' : '') + '" onclick="selectMockOpt(' + i + ')">' +
+      '<span class="opt-letter">' + letters[i] + '</span>' +
+      '<span>' + opt + '</span></button>';
+  }).join('');
+
+  var attemptedCount = Object.keys(mockState.answers).length;
+
+  var html =
+    '<div class="mock-q-num">Question ' + (mockState.current + 1) + ' / 100' +
+      ' <span class="mock-q-tier t' + q.tier + '">T' + q.tier + '</span>' +
+      ' <span style="color:#64748b;margin-left:8px">[' + q.topic + ' • ' + q.scope + ']</span>' +
+    '</div>' +
+    '<div class="mock-q-text">' + q.q + '</div>' +
+    '<div class="mock-options">' + optsHtml + '</div>' +
+    '<div class="mock-nav">' +
+      '<button class="mock-btn" onclick="prevMockQ()"' + (mockState.current === 0 ? ' disabled' : '') + '>← Previous</button>' +
+      '<div style="display:flex;gap:10px">' +
+        '<button class="mock-btn" onclick="clearMockAnswer()">⌫ Clear</button>' +
+        '<button class="mock-btn" onclick="toggleMockMark()">' + (mockState.marked[q.id] ? '★ Unmark Review' : '☆ Mark for Review') + '</button>' +
+      '</div>' +
+      '<button class="mock-btn primary" onclick="nextMockQ()">' +
+        (mockState.current === 99 ? 'Finish →' : 'Next →') +
+      '</button>' +
+    '</div>' +
+    '<div class="mock-grid" id="mockGrid"></div>' +
+    '<div style="text-align:center;margin-top:20px"><button class="mock-btn danger" onclick="confirmSubmit()">📝 Submit Paper (' + attemptedCount + '/100 attempted)</button></div>';
+
+  document.getElementById('mockBody').innerHTML = html;
+  renderMockGrid();
+  document.getElementById('mockProgress').innerHTML = '<strong>' + attemptedCount + '</strong> / 100 attempted';
+}
+
+function renderMockGrid(){
+  var grid = document.getElementById('mockGrid');
+  if(!grid) return;
+  var html = '';
+  for(var i = 0; i < 100; i++){
+    var q = mockExam[i];
+    var cls = 'mock-grid-cell';
+    if(mockState.answers[q.id] !== undefined) cls += ' attempted';
+    if(mockState.marked[q.id]) cls += ' review';
+    if(i === mockState.current) cls += ' current';
+    html += '<button class="' + cls + '" onclick="jumpMockQ(' + i + ')">' + (i+1) + '</button>';
+  }
+  grid.innerHTML = html;
+}
+
+function selectMockOpt(idx){
+  var q = mockExam[mockState.current];
+  mockState.answers[q.id] = idx;
+  renderMockQ();
+}
+
+function clearMockAnswer(){
+  var q = mockExam[mockState.current];
+  delete mockState.answers[q.id];
+  renderMockQ();
+}
+
+function toggleMockMark(){
+  var q = mockExam[mockState.current];
+  mockState.marked[q.id] = !mockState.marked[q.id];
+  renderMockQ();
+}
+
+function nextMockQ(){
+  if(mockState.current < 99){
+    mockState.current++;
+    renderMockQ();
+    window.scrollTo(0, 0);
+  } else {
+    confirmSubmit();
+  }
+}
+
+function prevMockQ(){
+  if(mockState.current > 0){
+    mockState.current--;
+    renderMockQ();
+    window.scrollTo(0, 0);
+  }
+}
+
+function jumpMockQ(idx){
+  mockState.current = idx;
+  renderMockQ();
+  window.scrollTo(0, 0);
+}
+
+function confirmSubmit(){
+  var attempted = Object.keys(mockState.answers).length;
+  var skipped = 100 - attempted;
+  if(!confirm('Submit your paper?\n\n' +
+    'Attempted: ' + attempted + '\nSkipped: ' + skipped + '\n\n' +
+    'You will not be able to change answers after submission.')) return;
+  submitMock();
+}
+
+function submitMock(){
+  if(mockState.timerId) clearInterval(mockState.timerId);
+  mockState.submitted = true;
+  var correct = 0, wrong = 0, skipped = 0;
+  var byTier = {1:{c:0,w:0,s:0}, 2:{c:0,w:0,s:0}, 3:{c:0,w:0,s:0}};
+  var byScope = {};
+  for(var i = 0; i < mockExam.length; i++){
+    var q = mockExam[i];
+    var sc = q.scope;
+    if(!byScope[sc]) byScope[sc] = {c:0,w:0,s:0};
+    var ans = mockState.answers[q.id];
+    if(ans === undefined){ skipped++; byTier[q.tier].s++; byScope[sc].s++; }
+    else if(ans === q.ans){ correct++; byTier[q.tier].c++; byScope[sc].c++; }
+    else { wrong++; byTier[q.tier].w++; byScope[sc].w++; }
+  }
+  var raw = correct * 3;
+  var penalty = wrong * 1;
+  var net = raw - penalty;
+  var pass = net >= 150;
+  renderMockResult({correct:correct, wrong:wrong, skipped:skipped, raw:raw, penalty:penalty, net:net, pass:pass, byTier:byTier, byScope:byScope});
+}
+
+function renderMockResult(s){
+  var pct = Math.round((s.net / 300) * 100);
+  var cls = s.pass ? 'pass' : 'fail';
+  var verdict = s.pass ? '✓ LIKELY CLEARS CUTOFF' : '✗ BELOW EXPECTED CUTOFF';
+  var subtxt = s.pass ?
+    'Net ' + s.net + '/300 — General cutoff is typically 150-170. You should clear.' :
+    'Net ' + s.net + '/300 — General cutoff is typically 150-170. Focus on weak areas.';
+
+  var tierRows = [1,2,3].map(function(t){
+    var b = s.byTier[t];
+    var total = b.c + b.w + b.s;
+    if(total === 0) return '';
+    return '<tr><td>Tier ' + t + '</td><td>' + total + '</td><td style="color:#22c55e">' + b.c + '</td><td style="color:#ef4444">' + b.w + '</td><td style="color:#94a3b8">' + b.s + '</td></tr>';
+  }).join('');
+
+  var scopeRows = Object.keys(s.byScope).sort().map(function(sc){
+    var b = s.byScope[sc];
+    var total = b.c + b.w + b.s;
+    return '<tr><td>' + sc + '</td><td>' + total + '</td><td style="color:#22c55e">' + b.c + '</td><td style="color:#ef4444">' + b.w + '</td><td style="color:#94a3b8">' + b.s + '</td></tr>';
+  }).join('');
+
+  var reviewHtml = mockExam.map(function(q, i){
+    var ans = mockState.answers[q.id];
+    var status = ans === undefined ? 'skip' : (ans === q.ans ? 'correct' : 'wrong');
+    var letters = ['A','B','C','D'];
+    var optsHtml = q.options.map(function(opt, oi){
+      var oCls = '';
+      if(oi === q.ans) oCls = 'right';
+      else if(oi === ans && ans !== q.ans) oCls = 'user-wrong';
+      return '<span class="ropt ' + oCls + '">' + letters[oi] + '. ' + opt + '</span>';
+    }).join('');
+    var statusLbl = status === 'correct' ? '✓ Correct (+3)' : status === 'wrong' ? '✗ Wrong (−1)' : '— Skipped (0)';
+    return '<div class="mock-review-card ' + status + '">' +
+      '<div class="mock-q-num">Q' + (i+1) + ' • ' + statusLbl + ' <span class="mock-q-tier t' + q.tier + '">T' + q.tier + '</span></div>' +
+      '<div class="rq">' + q.q + '</div>' +
+      optsHtml +
+      '<div class="rexp"><strong>Explanation:</strong> ' + q.exp + '</div>' +
+      '<div class="rmeta"><span>' + q.topic + '</span><span>' + q.scope + '</span></div>' +
+    '</div>';
+  }).join('');
+
+  document.getElementById('mockBody').innerHTML =
+    '<div class="mock-result">' +
+      '<div class="mock-score-card ' + cls + '">' +
+        '<div class="lbl">Final Score (MPPSC 2026 marking: +3 / −1)</div>' +
+        '<div class="big">' + s.net + ' / 300</div>' +
+        '<div class="lbl">' + verdict + ' (' + pct + '%)</div>' +
+        '<div style="color:rgba(255,255,255,.85);margin-top:10px;font-size:.85rem">' + subtxt + '</div>' +
+      '</div>' +
+      '<div class="mock-stats-row">' +
+        '<div class="mock-stat correct"><div class="v">' + s.correct + '</div><div class="l">Correct (×3 = +' + s.raw + ')</div></div>' +
+        '<div class="mock-stat wrong"><div class="v">' + s.wrong + '</div><div class="l">Wrong (×1 = −' + s.penalty + ')</div></div>' +
+        '<div class="mock-stat skip"><div class="v">' + s.skipped + '</div><div class="l">Skipped</div></div>' +
+        '<div class="mock-stat"><div class="v">' + (100 - s.skipped) + '</div><div class="l">Attempted</div></div>' +
+        '<div class="mock-stat"><div class="v">' + (s.correct + s.wrong > 0 ? Math.round((s.correct/(s.correct+s.wrong))*100) : 0) + '%</div><div class="l">Accuracy</div></div>' +
+      '</div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px">' +
+        '<div style="background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:16px">' +
+          '<div style="color:#cbd5e1;font-weight:700;margin-bottom:10px">By Tier</div>' +
+          '<table style="width:100%;font-size:.85rem;color:#e2e8f0;border-collapse:collapse">' +
+          '<thead><tr style="color:#94a3b8;border-bottom:1px solid #334155"><th style="text-align:left;padding:6px 4px">Tier</th><th>Total</th><th>✓</th><th>✗</th><th>—</th></tr></thead>' +
+          '<tbody>' + tierRows + '</tbody></table>' +
+        '</div>' +
+        '<div style="background:#0f172a;border:1px solid #1e293b;border-radius:10px;padding:16px">' +
+          '<div style="color:#cbd5e1;font-weight:700;margin-bottom:10px">By Scope</div>' +
+          '<table style="width:100%;font-size:.85rem;color:#e2e8f0;border-collapse:collapse">' +
+          '<thead><tr style="color:#94a3b8;border-bottom:1px solid #334155"><th style="text-align:left;padding:6px 4px">Scope</th><th>Total</th><th>✓</th><th>✗</th><th>—</th></tr></thead>' +
+          '<tbody>' + scopeRows + '</tbody></table>' +
+        '</div>' +
+      '</div>' +
+      '<h3 style="color:#f1f5f9;margin:30px 0 14px">📖 Detailed Review with Answer Key</h3>' +
+      reviewHtml +
+      '<div style="text-align:center;margin:30px 0"><button class="mock-btn" onclick="closeMockExam()">Close Exam</button></div>' +
+    '</div>';
+
+  document.getElementById('mockProgress').innerHTML = '<strong>SUBMITTED</strong> — Score ' + s.net + '/300';
+  document.getElementById('mockTimer').textContent = '✅ SUBMITTED';
+  document.getElementById('mockTimer').classList.remove('warn','danger');
+  window.scrollTo(0, 0);
+}
+
+
 init();
 
 </script>
+
+<div class="mock-overlay" id="mockOverlay">
+  <div class="mock-header">
+    <div class="mock-title">&#127919; MPPSC 2026 Mock Test &mdash; Paper-I (GS)<span class="sub" id="mockProgress"><strong>0</strong> / 100 attempted</span></div>
+    <div class="mock-timer" id="mockTimer">&#9201;&#65039; 02:00:00</div>
+    <div class="mock-actions"><button class="mock-btn danger" onclick="closeMockExam()">Exit</button></div>
+  </div>
+  <div class="mock-body" id="mockBody"></div>
+</div>
 </body>
 </html>
